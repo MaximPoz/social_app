@@ -1,0 +1,12 @@
+.nav{
+    grid-area: n;
+    background-color: rgb(160, 160, 68);
+    width: 200px;
+  }
+
+  .item{
+      color: white;
+  }
+  .act{
+      color:violet
+  }
