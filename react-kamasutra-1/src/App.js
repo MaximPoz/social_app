@@ -8,7 +8,7 @@ import Profile from './components/Profile';
 const App = () => { //const App = function(){...}
   return (
     <div className='app-wrapper'>
-      <div>test2</div>
+      <div>test3</div>
       <Header />
       <Nav />
       <Profile/>
