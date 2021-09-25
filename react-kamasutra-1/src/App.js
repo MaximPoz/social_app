@@ -1,9 +1,9 @@
 import React from 'react'; //хз написал потому что у самурая так
 import './App.css';
 
-import Header from './components/Header';
-import Nav from './components/Nav';
-import Profile from './components/Profile';
+import Header from './components/Header/Header';
+import Nav from './components/Navbar/Nav';
+import Profile from './components/Profile/Profile';
 
 const App = () => { //const App = function(){...}
   return (
