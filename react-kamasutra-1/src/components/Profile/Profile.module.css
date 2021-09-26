@@ -2,3 +2,6 @@
     grid-area: c;
     background-color: bisque;
   }
+  .content img {
+    width: 400px;
+  }

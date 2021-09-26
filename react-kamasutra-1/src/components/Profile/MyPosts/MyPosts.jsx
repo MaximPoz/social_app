@@ -7,10 +7,11 @@ const MyPosts = () => {
         <div>
             <div><textarea></textarea></div>
             <div><button> My post </button></div>
-          <Post />
 
+            <Post massage='ya Oleg' like='+15' />
+            <Post massage='ya tozhe' like='+20' />
         </div>
-
     )
+
 }
 export default MyPosts;
