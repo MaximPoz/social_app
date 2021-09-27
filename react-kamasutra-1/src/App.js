@@ -5,15 +5,17 @@ import Header from './components/Header/Header';
 import Nav from './components/Navbar/Nav';
 import Profile from './components/Profile/Profile';
 import MyPosts from './components/Profile/MyPosts/MyPosts';
-import Dialogs from './components/Dialogs/Dialogs'
+import Dialogs from './components/Dialogs/Dialogs.jsx'
 
 const App = () => { //const App = function(){...}
   return (
     <div className='app-wrapper'>
       <Header />
       <Nav />
-      {/* <Profile/> */}
+      <div className='app-wrapper-content'>
       <Dialogs/>
+      </div>
+      {/* <Profile/> */}
     </div>
   );
 }
