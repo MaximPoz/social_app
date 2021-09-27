@@ -1,7 +1,10 @@
 .header{
     grid-area: h;
     background-color:wheat ;
+    width: 1535px;
+    height: 54px;
   }
   .header img{
     width: 200px;
+    height: 65px;
   }
