@@ -7,9 +7,9 @@ const Nav = () => {
     return (<nav className={s.nav}>
         <div className={s.act}><a href="/Profile">Profile</a></div>
         <div className={s.item}><a href="/Dialogs">Masseges</a></div>
-        <div className={s.item}><a>Mews</a></div>
-        <div className={s.item}><a>Music</a></div>
-        <div className={s.item}><a>Settings</a></div>
+        <div className={s.item}><a href="/News">Mews</a></div>
+        <div className={s.item}><a href="/Music">Music</a></div>
+        <div className={s.item}><a href="/Settings">Settings</a></div>
     </nav>
     )
 }
