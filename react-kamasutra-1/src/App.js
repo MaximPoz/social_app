@@ -4,7 +4,6 @@ import './App.css';
 import Header from './components/Header/Header';
 import Nav from './components/Navbar/Nav';
 import Profile from './components/Profile/Profile';
-import MyPosts from './components/Profile/MyPosts/MyPosts';
 import Dialogs from './components/Dialogs/Dialogs.jsx'
 import News from './components/News/News'
 import { BrowserRouter, Route } from 'react-router-dom';
@@ -19,11 +18,11 @@ const App = () => { //const App = function(){...}
       <Header />
       <Nav />
       <div className='app-wrapper-content'>
-      <Route path='/Dialogs' component={Dialogs} />
-      <Route path='/Profile' component={Profile}/>
-      <Route path='/News' component={News} />
-      <Route path='/Music' component={Music} />
-      <Route path='/Settings' component={Settings} />
+      <Route path='/Dialogs' render={ () => <Dialogs />} />
+      <Route path='/Profile' render={ () => <Profile/>} />
+      <Route path='/News' render={ () => <News/>} />
+      <Route path='/Music' render={ () => <Music/>} />
+      <Route path='/Settings' render={ () => <Settings/>} />
       </div>
     </div>
     </BrowserRouter>
