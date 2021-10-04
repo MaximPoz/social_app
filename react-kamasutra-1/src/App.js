@@ -11,15 +11,18 @@ import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
 
 
-const App = () => { //const App = function(){...}
+const App = (props) => { //const App = function(){...}
+
+  
+
   return (
     <BrowserRouter>
     <div className='app-wrapper'>
       <Header />
       <Nav />
       <div className='app-wrapper-content'>
-      <Route path='/Dialogs' render={ () => <Dialogs />} />
-      <Route path='/Profile' render={ () => <Profile/>} />
+      <Route path='/Dialogs' render={ () => <Dialogs dialogs={props.dialogs} messages={props.messages}/>} />
+      <Route path='/Profile' render={ () => <Profile posts={props.posts}/>} />  
       <Route path='/News' render={ () => <News/>} />
       <Route path='/Music' render={ () => <Music/>} />
       <Route path='/Settings' render={ () => <Settings/>} />
@@ -30,3 +33,6 @@ const App = () => { //const App = function(){...}
 }
 
 export default App;
+
+
+//<Profile posts={props.posts}/> это props Profile'ов (момент отрисовки Profile)

@@ -3,13 +3,18 @@ import s from './Profile.module.css';
 import MyPosts from './MyPosts/MyPosts';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 
-const Profile = () => {
+const Profile = (props) => {
+
+  
+
     return (
         <div>
             <ProfileInfo/>
-            <MyPosts />
+            <MyPosts posts={props.posts}/>
             
         </div>
     )
 }
 export default Profile;
+
+//<MyPosts posts={props.posts}/> это props MyPosts'ов (момент отрисовки MyPosts)
