@@ -14,14 +14,14 @@ const MyPosts = (props) => {
                                                                                 //})
     let newPostElement = React.createRef();     
     let addPost =()=>{
-        debugger;
     let text = newPostElement.current.value;
     props.addPost(text)
+    newPostElement.current.value = '';   //что бы в обл.текста не было текста 
     }
     return (
         <div className={s.postsBlock}>
             <h3>My posts </h3>
-            <div><textarea ref={newPostElement}>123</textarea></div>  
+            <div><textarea ref={newPostElement}></textarea></div>  
             <div><button onClick={ addPost }> Add post</button></div>
 
             <div className={s.posts}>
