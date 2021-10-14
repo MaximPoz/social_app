@@ -1,6 +1,6 @@
 import React from 'react'; //хз написал потому что у самурая так
 import './App.css';
-
+import { addPost } from './redux/state';
 import Header from './components/Header/Header';
 import Nav from './components/Navbar/Nav';
 import Profile from './components/Profile/Profile';
@@ -18,14 +18,14 @@ const App = (props) => { //const App = function(){...}
       <Nav />
       <div className='app-wrapper-content'>
         
-      <Route path='/Dialogs' render={ () => <Dialogs state={props.state.dialogsPage}/>} />
-      <Route path='/Profile' render={ () => <Profile state={props.state.profilePage}/>} />  
-      <Route path='/News' render={ () => <News/>
-    } />
-      <Route path='/Music' render={ () => <Music/>
-    } />
-      <Route path='/Settings' render={ () => <Settings/>
-    } />
+      <Route path='/Dialogs' render={ () => <Dialogs 
+        state = {props.state.dialogsPage}/>} />
+      <Route path='/Profile' render={ () => <Profile 
+        state = {props.state.profilePage} 
+        addPost = {props.addPost}/>} />  
+      <Route path='/News' render={ () => <News/>} />
+      <Route path='/Music' render={ () => <Music/>} />
+      <Route path='/Settings' render={ () => <Settings/>} />
       </div>
     </div>
   );
