@@ -13,15 +13,19 @@ const MyPosts = (props) => {
                                                                                 //<Post message={p.message} like={p.likesCount} />  это props Post'ов (момент отрисовки Post)
                                                                                 //})
     let newPostElement = React.createRef();     
-    let addPost =()=>{
-    let text = newPostElement.current.value;
-    props.addPost(text)
-    newPostElement.current.value = '';   //что бы в обл.текста не было текста 
+    let addPost = () => props.addPost(); 
+
+    let onPostChange = () =>{
+        let text = newPostElement.current.value;
+        props.updateNewPostText(text);              //через props отправляет в state
     }
+
     return (
         <div className={s.postsBlock}>
-            <h3>My posts </h3>
-            <div><textarea ref={newPostElement}></textarea></div>  
+            <h3> My posts </h3>
+            <div><textarea onChange={onPostChange} ref={newPostElement}  //onCh. следит за тем что мы вводим и отправляет это в функцию onPCh
+                            value={props.newPostText}/></div>            
+
             <div><button onClick={ addPost }> Add post</button></div>
 
             <div className={s.posts}>

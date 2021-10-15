@@ -7,6 +7,7 @@ let state = {
             { id: 2, message: 'ya tozhe', likesCount: '+21' },
             { id: 3, message: 'a ya zhenya', likesCount: '-12' }
         ],
+        newPostText: 'newPostText'
     },
     dialogsPage: {
         messages: [
@@ -22,14 +23,19 @@ let state = {
     }
 }
 
-export let addPost = (postMessage) => {
-    debugger;
+export let addPost = () => {
     let newPost = {
         id: 5,
-        message: postMessage,
+        message: state.profilePage.newPostText,
         likesCount: "God"
     }
-    state.profilePage.posts.push(newPost);
+    state.profilePage.posts.push(newPost); // пушит в посты
+    state.profilePage.newPostText = '';   //зануляем textarea 
+    rerenderEntireTree(state);
+}
+
+export let updateNewPostText = (newText) => {  //=text
+    state.profilePage.newPostText = newText;   // отправляет в value textarea
     rerenderEntireTree(state);
 }
 
