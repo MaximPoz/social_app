@@ -19,12 +19,12 @@ const MyPosts = (props) => {
         let text = newPostElement.current.value;
         props.updateNewPostText(text);              //через props отправляет в state
     }
-
     return (
         <div className={s.postsBlock}>
             <h3> My posts </h3>
-            <div><textarea onChange={onPostChange} ref={newPostElement}  //onCh. следит за тем что мы вводим и отправляет это в функцию onPCh
-                            value={props.newPostText}/></div>            
+            <div><textarea onChange={onPostChange} 
+                           ref={newPostElement}  //onCh. следит за тем что мы вводим и отправляет это в функцию onPCh
+                        value={props.newPostText}/></div>            
 
             <div><button onClick={ addPost }> Add post</button></div>
 

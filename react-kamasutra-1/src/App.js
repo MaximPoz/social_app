@@ -8,9 +8,11 @@ import News from './components/News/News'
 import { BrowserRouter, Route } from 'react-router-dom';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
+import { updateNewMessageText } from './redux/state';
 
 
 const App = (props) => { //const App = function(){...}
+
   return (
     <div className='app-wrapper'>
       <Header />
@@ -18,7 +20,11 @@ const App = (props) => { //const App = function(){...}
       <div className='app-wrapper-content'>
         
       <Route path='/Dialogs' render={ () => <Dialogs 
-        state = {props.state.dialogsPage}/>} />
+        dialogsPage = {props.state.dialogsPage}
+        newMessageText = {props.state.dialogsPage.newMessageText}
+        addMessage={props.addMessage}
+        updateNewMessageText={props.updateNewMessageText}
+        />} />
 
       <Route path='/Profile' render={ () => <Profile 
         profilePage = {props.state.profilePage} 

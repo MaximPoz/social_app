@@ -27,6 +27,6 @@ img{
     border-radius: 30px; 
 }
 
-.area{
-   display: block;
+textarea{
+    margin-top: 30px;
 }

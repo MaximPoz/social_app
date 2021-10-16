@@ -15,11 +15,14 @@ let state = {
             { id: 2, message: 'Bro' },
             { id: 3, message: 'tools' }
         ],
+        
+
         dialogs: [
             { id: 1, name: 'Lena' },
             { id: 2, name: 'Viktor' },
             { id: 3, name: 'Artur' }
-        ]
+        ],
+        newMessageText: 'newMessageText',
     }
 }
 
@@ -39,5 +42,22 @@ export let updateNewPostText = (newText) => {  //=text
     rerenderEntireTree(state);
 }
 
+
+export let addMessage = () => {
+   
+    let newMessage = {
+        id: 4,
+        message: state.dialogsPage.newMessageText,
+    }
+    state.dialogsPage.messages.push(newMessage); // пушит в сообщения
+    state.dialogsPage.newMessageText = '';       //зануляем textarea 
+    rerenderEntireTree(state);
+
+}
+
+export let updateNewMessageText = (newText) => {  //=text
+    state.dialogsPage.newMessageText = newText;   // отправляет в value textarea
+    rerenderEntireTree(state);
+}
 
 export default state;
