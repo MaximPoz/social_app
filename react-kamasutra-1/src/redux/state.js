@@ -1,4 +1,4 @@
-import { rerenderEntireTree } from "../render";
+let rerenderEntireTree = () =>{} // ф-ция ссылается на то что пришло в observer
 
 let state = {
     profilePage: {
@@ -26,7 +26,8 @@ let state = {
     }
 }
 
-export let addPost = () => {
+
+export const addPost = () => {
     let newPost = {
         id: 5,
         message: state.profilePage.newPostText,
@@ -37,13 +38,13 @@ export let addPost = () => {
     rerenderEntireTree(state);
 }
 
-export let updateNewPostText = (newText) => {  //=text
+export const updateNewPostText = (newText) => {  //=text
     state.profilePage.newPostText = newText;   // отправляет в value textarea
     rerenderEntireTree(state);
 }
 
 
-export let addMessage = () => {
+export const addMessage = () => {
    
     let newMessage = {
         id: 4,
@@ -55,9 +56,13 @@ export let addMessage = () => {
 
 }
 
-export let updateNewMessageText = (newText) => {  //=text
+export const updateNewMessageText = (newText) => {  //=text
     state.dialogsPage.newMessageText = newText;   // отправляет в value textarea
     rerenderEntireTree(state);
+}
+
+export const subscribe = (observer) => {    //observer - это rerenderEntireTree из index
+    rerenderEntireTree = observer;          //копирует в ф-цию rere (state) параметр из observer
 }
 
 export default state;
