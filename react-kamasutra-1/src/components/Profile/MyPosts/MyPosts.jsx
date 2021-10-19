@@ -1,10 +1,9 @@
 import React from 'react';
+import { addPostActionCreator, updateActionPostText } from '../../../redux/state';
 import s from './MyPosts.module.css';
 import Post from './Post/Post';
 
 const MyPosts = (props) => {
-
-
     let postsElements =
         props.posts.map(p => <Post message={p.message} like={p.likesCount} />)  //в качестве "p" у нас придёт строка массива posts (p можно заменить на что угодно)
     //и из строки массива как с props мы забераем один из элементов p.message или p.likesCount
@@ -14,11 +13,11 @@ const MyPosts = (props) => {
     //})
     let newPostElement = React.createRef();
     let addPost = () =>
-        props.dispatch({ type: 'ADD-POST' })
+        props.dispatch(addPostActionCreator())
 
     let onPostChange = () => {
         let text = newPostElement.current.value;
-        let action = { type: 'UPDATE-NEW-POST-TEXT', newText: text };
+        let action = updateActionPostText(text);
         props.dispatch(action)
     }
     return (
