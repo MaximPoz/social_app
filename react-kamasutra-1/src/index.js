@@ -15,6 +15,7 @@ let rerenderEntireTree = (state) => {
         <App state={state}
              dispatch={store.dispatch.bind(store)}       // bind жестко связываем addPost с store, иначе он будет обращаться к пропсам
                                                          // let addPost = () => props.addPost(); 
+             store = {store}
         />
       </BrowserRouter>
     </React.StrictMode>,

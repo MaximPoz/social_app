@@ -11,7 +11,7 @@ import Settings from './components/Settings/Settings';
 import { updateNewMessageText } from './redux/state';
 
 
-const App = (props) => { //const App = function(){...}
+const App = (props) => { // это фун-ная компанента с объектом props
 
   return (
     <div className='app-wrapper'>
@@ -19,9 +19,8 @@ const App = (props) => { //const App = function(){...}
       <Nav />
       <div className='app-wrapper-content'>
         
-      <Route path='/Dialogs' render={ () => <Dialogs 
-        dialogsPage = {props.state.dialogsPage}
-        newMessageText = {props.state.dialogsPage.newMessageText}
+      <Route path='/Dialogs' render={ () => <Dialogs //route следит за URL и загружается если path'ы совпадают
+        store = {props.store}
         dispatch={props.dispatch}
         />} />
 
