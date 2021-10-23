@@ -2,11 +2,6 @@ import dialogsReducer from "./dialogs-reducer";
 import pofileReducer from "./profile-reducer";
 import sidebarReducer from "./sidebar-reducer";
 
-const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'; // ну тут вроде понятно, объявление в глобальную константу
-const ADD_POST = 'ADD-POST';
-const SAND_MESSAGE = 'SAND-MESSAGE';
-const UPDARE_NEW_MESSAGE_BODY = 'UPDARE_NEW_MESSAGE_BODY';
-
 
 let store = {
     _state: {  //reducer принимает state и action (если нужно применяет этот action к state) и возвращает новый стейт или возвращает старый, если action не примеился. 

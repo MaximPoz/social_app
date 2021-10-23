@@ -8,7 +8,7 @@ import News from './components/News/News'
 import { BrowserRouter, Route } from 'react-router-dom';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
-import { updateNewMessageText } from './redux/state';
+import { updateNewMessageText } from './redux/store';
 
 
 const App = (props) => { // это фун-ная компанента с объектом props
