@@ -1,6 +1,4 @@
 import React from 'react';
-import { addPostActionCreator, updateActionPostText } from '../../../redux/profile-reducer';
-
 import s from './MyPosts.module.css';
 import Post from './Post/Post';
 
@@ -13,27 +11,28 @@ const MyPosts = (props) => {
     //<Post message={p.message} like={p.likesCount} />  это props Post'ов (момент отрисовки Post)
     //})
     let newPostElement = React.createRef();
-    let addPost = () =>
-        props.dispatch(addPostActionCreator())
+    
+    let onAddPost = () =>
+        props.addPost();
 
-    let onPostChange = () => {
+    let onPostChange = () => {  
         let text = newPostElement.current.value;
-        let action = updateActionPostText(text);
-        props.dispatch(action)
+        props.updateActionPostText(text)
     }
+
     return (
         <div className={s.postsBlock}>
             <h3> My posts </h3>
             <div><textarea onChange={onPostChange}    //onCh. следит за тем что мы вводим и отправляет это в функцию onPCh
                 ref={newPostElement}
-                value={props.newPostText}
-            /></div>
-
-            <div><button onClick={addPost}> Add post</button></div>
+                value={props.newPostText}/>
+                </div>
+            <div>
+                <button onClick={onAddPost}> Add post</button>
+            </div>
 
             <div className={s.posts}>
                 {postsElements}
-
             </div>
         </div>
     )

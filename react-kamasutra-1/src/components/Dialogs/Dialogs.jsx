@@ -1,5 +1,4 @@
 import React from 'react';
-import { sendMessageActionCreator, updateActionMessageText } from '../../redux/dialogs-reducer';
 import DialogItem from './DialogItem/DialogItem';
 import s from './Dialogs.module.css';
 import Message from './Message/Message';
@@ -7,17 +6,18 @@ import Message from './Message/Message';
 
 const Dialogs = (props) => {
 
-    let state = props.store.getState().dialogsPage; //ссылка на dialogsPage
+    let state = props.dialogsPage; //ссылка на dialogsPage
     let newMessageBody = state.newMessageBody;      //ссылка на newMessageBody
 
     let dialogsElements = state.dialogs.map(d => <DialogItem name={d.name} id={d.id} />)
     let messagesElements = state.messages.map(m => <Message message={m.message} />)
 
-    let addMessage = () =>props.dispatch(sendMessageActionCreator());  //вызываем action из state.js (добовляем сообщение)
+    let addMessage = () =>
+    props.sendMessage();  //вызываем action из state.js (добовляем сообщение)
 
     let onMessageChange = (e) => {
         let body = e.target.value; //target - textarea, value - значение, e(event - событие) - в данном случае onChange
-        props.store.dispatch(updateActionMessageText(body)) //передаём в state что бы обновить и получить сообщение в textarea
+        props.updateActionMessageText(body)
     }
     return (
         <div className={s.dialogs}>

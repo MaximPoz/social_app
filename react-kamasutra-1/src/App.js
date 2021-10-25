@@ -9,6 +9,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
 import { updateNewMessageText } from './redux/store';
+import DialogsContainer from './components/Dialogs/DialogsContainer';
 
 
 const App = (props) => { // это фун-ная компанента с объектом props
@@ -18,20 +19,17 @@ const App = (props) => { // это фун-ная компанента с объ�
       <Header />
       <Nav />
       <div className='app-wrapper-content'>
-        
-      <Route path='/Dialogs' render={ () => <Dialogs //route следит за URL и загружается если path'ы совпадают
-        store = {props.store}
-        dispatch={props.dispatch}
+
+        <Route path='/Dialogs' render={() => <DialogsContainer //Route следит за URL и загружается если path'ы совпадают
+          store={props.store}
         />} />
 
-      <Route path='/Profile' render={ () => <Profile 
-        profilePage = {props.state.profilePage} 
-        dispatch = {props.dispatch}
-        />} />  
-        
-      <Route path='/News' render={ () => <News/>} />
-      <Route path='/Music' render={ () => <Music/>} />
-      <Route path='/Settings' render={ () => <Settings/>} />
+        <Route path='/Profile' render={() => <Profile store={props.store}
+        />} />
+
+        <Route path='/News' render={() => <News />} />
+        <Route path='/Music' render={() => <Music />} />
+        <Route path='/Settings' render={() => <Settings />} />
       </div>
     </div>
   );
