@@ -5,7 +5,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
-import { Provider } from './StoreContext';
+import { Provider } from 'react-redux';
+
 
 
 
@@ -15,16 +16,11 @@ let rerenderEntireTree = (state) => {
     <React.StrictMode>
       <BrowserRouter>
       <Provider store={store}>
-        <App 
-        // state={state}
-        // dispatch={store.dispatch.bind(store)}       // bind жестко связываем addPost с store, иначе он будет обращаться к пропсам let addPost = () => props.addPost(); 
-        // store = {store}
-        />
-
+        <App />
       </Provider>
       </BrowserRouter>
     </React.StrictMode>,
-    document.getElementById('root'));
+    document.getElementById('root'))
 } 
 
 rerenderEntireTree(store.getState()); //вызываем state, по этому скобки ставим
