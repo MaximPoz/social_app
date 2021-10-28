@@ -21,11 +21,9 @@ const App = (props) => { // это фун-ная компанента с объ�
       <div className='app-wrapper-content'>
 
         <Route path='/Dialogs' render={() => <DialogsContainer //Route следит за URL и загружается если path'ы совпадают
-        // store={props.store}
         />} />
 
         <Route path='/Profile' render={() => <Profile 
-        // store={props.store}
         />} />
 
         <Route path='/News' render={() => <News />} />

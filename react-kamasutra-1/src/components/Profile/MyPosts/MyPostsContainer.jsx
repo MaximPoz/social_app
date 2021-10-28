@@ -4,7 +4,7 @@ import { addPostActionCreator, updateActionPostText } from '../../../redux/profi
 import MyPosts from './MyPosts';
 
 
-let mapStateToProps = (state) => {
+let mapStateToProps = (state) => {  //при изменении state запускается эта ф-ци и новый объект сравнивается со старым, если изм. нет компан. не перерисовывается
     return {
         posts: state.profilePage.posts,
         newPostText: state.profilePage.newPostText

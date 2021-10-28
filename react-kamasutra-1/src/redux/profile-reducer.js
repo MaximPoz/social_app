@@ -1,7 +1,7 @@
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'; // ну тут вроде понятно, объявление в глобальную константу
 const ADD_POST = 'ADD-POST';
 
-let initialState =  {
+let initialState = {
     posts: [
         { id: 1, message: 'ya Oleg', likesCount: '+16' },
         { id: 2, message: 'ya tozhe', likesCount: '+21' },
@@ -12,20 +12,26 @@ let initialState =  {
 
 const pofileReducer = (state = initialState, action) => {
     switch (action.type) {  //если объект action имеет тип ADD_POST тогда выполняем этот код (добовляем пост из textarea)
-        case ADD_POST:
+        case ADD_POST: {
             let newPost = {
                 id: 5,
                 message: state.newPostText,
                 likesCount: "God"
             }
-            state.posts.push(newPost);                  // пушит в посты
-            state.newPostText = '';                     //зануляем textarea 
-            return state;
 
-        case UPDATE_NEW_POST_TEXT:                    //но если action тип UPDATE_NEW_POST_TEXT тогда мы 
-            state.newPostText = action.newText;       // отправляем текст который набирается в значение textarea в state.newPostText
-            return state;
+            let stateCopy = { ...state };   //создаём копию что бы не изменять основной state
+            stateCopy.posts = [...state.posts];
+            stateCopy.posts.push(newPost);                 // пушит в посты
 
+            // state.posts.push(newPost);                  // пушит в посты
+            stateCopy.newPostText = '';                     //зануляем textarea 
+            return stateCopy;
+        }
+        case UPDATE_NEW_POST_TEXT: {                  //но если action тип UPDATE_NEW_POST_TEXT тогда мы 
+            let stateCopy = { ...state };
+            stateCopy.newPostText = action.newText;       // отправляем текст который набирается в значение textarea в state.newPostText
+            return stateCopy;
+        }
         default:                                     //если не соответствует не одному action тогда вернуть state
             return state;
     }
