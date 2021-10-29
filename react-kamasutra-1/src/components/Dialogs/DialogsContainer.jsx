@@ -5,12 +5,15 @@ import Dialogs from './Dialogs';
 
 
 let mapStateToProps = (state) =>{
+    debugger
     return{
-        dialogsPage: state.dialogsPage
+        dialogsPage: state.dialogsPage,
+        newMessageBody: state.dialogsPage.newMessageBody
     }
 }
 
 let mapDispatchToProps = (dispatch) => {
+
     return{
         updateActionMessageText: (body) => {
             dispatch(updateActionMessageText(body));

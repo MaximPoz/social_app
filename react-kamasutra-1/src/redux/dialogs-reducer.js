@@ -18,16 +18,19 @@ let initialState = {
 };
 
 const dialogsReducer = (state = initialState, action) => { //если объект action имеет тип SAND_MESSAGE тогда выполняем этот код (добовляем message из textarea)
+
+
     switch (action.type) {
         case SAND_MESSAGE:
             let body = state.newMessageBody;
-            state.newMessageBody = '';       //зануляем textarea 
-            state.messages.push({ id: 4, message: body }); // пушит в сообщения
-            return state;
+            return {...state,                    //сделали копию state
+            messages: [...state.messages, { id: 4, message: body + "   ТУЦ-ТУЦ" }],  //создаём новый массив, слева у нас старый массив, а справа у нас новое сообщение (т.е. новое сообщение будет пушиться под старым массивом), если добавить вначало, то будет пушиться над старым массивом.
+            newMessageBody: '',                  //зануляем textarea 
+        }; 
 
         case UPDARE_NEW_MESSAGE_BODY:
-            state.newMessageBody = action.body;   // обвновляем данные в state.dialogsPage.newMessageBody
-            return state;                           //тем самым они обновляются в textarea
+            return {...state,                //вернули обновлённую копию в textarea
+            newMessageBody: action.body};    // обвновляем данные в state.dialogsPage.newMessageBody                
 
         default:
             return state;
