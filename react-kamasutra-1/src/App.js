@@ -10,6 +10,7 @@ import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
 import { updateNewMessageText } from './redux/store';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
+import Users from './components/Users/Users';
 
 
 const App = (props) => { // это фун-ная компанента с объектом props
@@ -19,16 +20,18 @@ const App = (props) => { // это фун-ная компанента с объ�
       <Header />
       <Nav />
       <div className='app-wrapper-content'>
-
-        <Route path='/Dialogs' render={() => <DialogsContainer //Route следит за URL и загружается если path'ы совпадают
-        />} />
-
-        <Route path='/Profile' render={() => <Profile 
-        />} />
-
-        <Route path='/News' render={() => <News />} />
-        <Route path='/Music' render={() => <Music />} />
-        <Route path='/Settings' render={() => <Settings />} />
+        <Route path='/Dialogs'   //Route следит за URL и загружается если path'ы совпадают
+          render={() => <DialogsContainer />} />
+        <Route path='/Profile'
+          render={() => <Profile />} />
+        <Route path='/News'
+          render={() => <News />} />
+        <Route path='/Music'
+          render={() => <Music />} />
+        <Route path='/Settings'
+          render={() => <Settings />} />
+        <Route path='/Users'
+          render={() => <Users />} />
       </div>
     </div>
   );

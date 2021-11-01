@@ -5,7 +5,6 @@ import Dialogs from './Dialogs';
 
 
 let mapStateToProps = (state) =>{
-    debugger
     return{
         dialogsPage: state.dialogsPage,
         newMessageBody: state.dialogsPage.newMessageBody
