@@ -1,16 +1,15 @@
-import React from 'react'; //хз написал потому что у самурая так
+import React from 'react'; 
 import './App.css';
 import Header from './components/Header/Header';
 import Nav from './components/Navbar/Nav';
 import Profile from './components/Profile/Profile';
-import Dialogs from './components/Dialogs/Dialogs.jsx'
 import News from './components/News/News'
 import { BrowserRouter, Route } from 'react-router-dom';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
 import { updateNewMessageText } from './redux/store';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
-import Users from './components/Users/Users';
+import UsersConteiner from './components/Users/UsersConteiner';
 
 
 const App = (props) => { // это фун-ная компанента с объектом props
@@ -31,7 +30,7 @@ const App = (props) => { // это фун-ная компанента с объ�
         <Route path='/Settings'
           render={() => <Settings />} />
         <Route path='/Users'
-          render={() => <Users />} />
+          render={() => <UsersConteiner />} />
       </div>
     </div>
   );
