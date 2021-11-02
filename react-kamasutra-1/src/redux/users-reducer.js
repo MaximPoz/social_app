@@ -32,7 +32,7 @@ const usersReducer = (state = initialState, action) => {
             }
 
         case SET_USERS: {
-            return {...state, users: [ ...state.users, ...action.users ]} //берём из state'a старых юзеров которые там были создать копию массива и дописать к ним юзеров которые к нам пришли из action (склеиваем тех кто были в state и теъх кто пришел в action)
+            return {...state, users: [...action.users ]} //берём из state'a старых юзеров которые там были создать копию массива и дописать к ним юзеров которые к нам пришли из action (склеиваем тех кто были в state и теъх кто пришел в action)
             }   
         
         default:                                     //если не соответствует не одному action тогда вернуть state
