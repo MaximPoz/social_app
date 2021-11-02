@@ -1,37 +1,17 @@
 import React from 'react';
 import styles from './Users.module.css';
-
+import * as axios from 'axios'; 
+import flyCat from '../../assets/image/flyCat.png'
 
 let Users = (props) => {
     if (props.users.length === 0) { //когда Users render'ится длинна массива = 0, по этому выполняется условие, потом при rerender'e длинна !=0 и условие не выполняется (иначе из-за вечного цикла будет ошибка)
 
-        props.setUsers([
-            {
-                id: 1,
-                photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Dmitry_Nagiev_2017_4.jpg/220px-Dmitry_Nagiev_2017_4.jpg',
-                followed: false,
-                fullName: 'Dmitry',
-                status: 'I am a boss',
-                location: {city: 'Minsk', country: 'Belarus'}
-            },
-            {
-                id: 2,
-                photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Dmitry_Nagiev_2017_4.jpg/220px-Dmitry_Nagiev_2017_4.jpg',
-                followed: true,
-                fullName: 'Sasha',
-                status: 'I am a boss too',
-                location: {city: 'Moscow', country: 'Russia'}
-            },
-            {
-                id: 3,
-                photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Dmitry_Nagiev_2017_4.jpg/220px-Dmitry_Nagiev_2017_4.jpg',
-                followed: false,
-                fullName: 'Andrew',
-                status: 'I am a boss too',
-                location: {city: 'Kiev', country: 'Ukraine'}
-            }
-        ]
-        )
+        axios.get("https://social-network.samuraijs.com/api/1.0/users")
+        .then(response => { //когда сервак даст ответ затем (then) выполни стрелочную ф-цию
+            props.setUsers(response.data.items) //придёт response у него мы берём data, а там items
+        }); //делаем get запрос и нам вернуться пользователи
+
+      
     }
 
     return <div>
@@ -39,7 +19,7 @@ let Users = (props) => {
         props.users.map(u => <div key={u.id}>
             <span>
                 <div>
-                    <img src={u.photoUrl} className={styles.usersPhoto} />
+                    <img src={ u.photos.small != null ? u.photo.small : flyCat } className={styles.usersPhoto} />
                 </div>
                 <div>
                     {u.followed
@@ -50,12 +30,12 @@ let Users = (props) => {
             </span>
             <span>
                 <span>
-                    <div>{u.fullName}</div>
+                    <div>{u.name}</div>
                     <div>{u.status}</div>
                 </span>
                 <span>
-                    <div>{u.location.contry}</div>
-                    <div>{u.location.city}</div>
+                    <div>{"u.location.contry"}</div>
+                    <div>{"u.location.city"}</div>
                 </span>
             </span>
         </div>)
