@@ -6,9 +6,9 @@ const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT';
 
 let initialState = {
     users: [],
-    pageSize: 30,
-    totalUsersCount: 0,
-    currentPage: 1
+    pageSize: 5,  //сколько пользователей на одной странице
+    totalUsersCount: 0,  //общее кол пользователей
+    currentPage: 1 // с какой страницы начать
 
 };
 

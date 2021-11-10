@@ -28,6 +28,7 @@ const MyPosts = (props) => {
             <h3> My posts </h3>
             <div>
                 <textarea onChange={onPostChange}    //onCh. следит за тем что мы вводим и отправляет это в функцию onPCh
+                placeholder="Пиши что на душе"
                     value={props.newPostText}/>
                 </div>
             <div>

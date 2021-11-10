@@ -30,6 +30,7 @@ const Dialogs = (props) => {
                 {messagesElements}
                 <div className={s.area}>
                     <textarea onChange={onMessageChange} // value берёт значение из state.newMessageBody
+                    placeholder="Введите сообщение"
                         value={props.newMessageBody} />
                     <div><button onClick={addMessage}>Add Message</button></div>
                 </div>

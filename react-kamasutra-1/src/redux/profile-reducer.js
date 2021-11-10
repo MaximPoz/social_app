@@ -7,7 +7,7 @@ let initialState = {
         { id: 2, message: 'ya tozhe', likesCount: '+21' },
         { id: 3, message: 'a ya zhenya', likesCount: '-12' }
     ],
-    newPostText: 'newPostText',
+    newPostText: '',
 };
 
 const pofileReducer = (state = initialState, action) => {

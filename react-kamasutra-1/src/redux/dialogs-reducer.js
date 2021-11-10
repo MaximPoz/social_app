@@ -14,7 +14,7 @@ let initialState = {
         { id: 2, name: 'Viktor' },
         { id: 3, name: 'Artur' }
     ],
-    newMessageBody: 'newMessageBody', //this value for textarea in Dialogs.jsx
+    newMessageBody: '', //this value for textarea in Dialogs.jsx
 };
 
 const dialogsReducer = (state = initialState, action) => { //если объект action имеет тип SAND_MESSAGE тогда выполняем этот код (добовляем message из textarea)
