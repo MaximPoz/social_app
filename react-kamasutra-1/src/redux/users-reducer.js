@@ -3,13 +3,14 @@ const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET_USERS';
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT';
+const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'; //переключи значение из фетчинга
 
 let initialState = {
     users: [],
     pageSize: 5,  //сколько пользователей на одной странице
     totalUsersCount: 0,  //общее кол пользователей
-    currentPage: 1 // с какой страницы начать
-
+    currentPage: 1, // с какой страницы начать
+    isFetching: true, //состояние запроса
 };
 
 const usersReducer = (state = initialState, action) => {  //редьюсер принимает старый state и меняет его на основании action
@@ -42,11 +43,15 @@ const usersReducer = (state = initialState, action) => {  //редьюсер п�
         }
 
         case SET_CURRENT_PAGE: {
-            return { ...state, currentPage: action.currentPage } //берём из state'a старых юзеров которые там были создать копию массива и дописать к ним юзеров которые к нам пришли из action (склеиваем тех кто были в state и теъх кто пришел в action)
+            return { ...state, currentPage: action.currentPage } //создаём копию stat'a и дополняем её action'ом 
         }
 
         case SET_TOTAL_USERS_COUNT: {
-            return { ...state, totalUsersCount: action.count } //берём из state'a старых юзеров которые там были создать копию массива и дописать к ним юзеров которые к нам пришли из action (склеиваем тех кто были в state и теъх кто пришел в action)
+            return { ...state, totalUsersCount: action.count } //создаём копию stat'a и дополняем её action'ом
+        }
+
+        case TOGGLE_IS_FETCHING: {
+            return { ...state, isFetching: action.isFetching } //создаём копию stat'a и дополняем её action'ом. !!!Dispatch'ит (отправляет) только объект!!!
         }
 
         default:                                     //если не соответствует не одному action тогда вернуть state
@@ -59,5 +64,6 @@ export const unfollowAC = (userId) => ({ type: UNFOLLOW, userId })
 export const setUsersAC = (users) => ({ type: SET_USERS, users })
 export const setCurrentPageAC = (currentPage) => ({ type: SET_CURRENT_PAGE, currentPage })
 export const setTotalUsersCountAC = (totalUsersCount) => ({ type: SET_TOTAL_USERS_COUNT, count: totalUsersCount })
+export const toggleIsFetchingAC = (isFetching) => ({type: TOGGLE_IS_FETCHING, isFetching})
 
 export default usersReducer;
