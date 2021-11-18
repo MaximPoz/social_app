@@ -2,6 +2,11 @@
     padding: 10px;
     color: black;
 }
-img {
+/* img {
     width: 300px;
+} */
+.avaWorkStatus{
+    width: 100px;
+    height: 100px;
+    border-radius: 100px;
 }

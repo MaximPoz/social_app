@@ -8,7 +8,11 @@
     font-weight: bold;
 }
 
-img {
+.allPages{
+    cursor: pointer;
+}
+
+.avaUsers {
     width: 100px;
     height: 100px;
 }

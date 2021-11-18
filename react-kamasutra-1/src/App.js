@@ -2,7 +2,6 @@ import React from 'react';
 import './App.css';
 import Header from './components/Header/Header';
 import Nav from './components/Navbar/Nav';
-import Profile from './components/Profile/Profile';
 import News from './components/News/News'
 import { BrowserRouter, Route } from 'react-router-dom';
 import Music from './components/Music/Music';
@@ -10,6 +9,7 @@ import Settings from './components/Settings/Settings';
 import { updateNewMessageText } from './redux/store';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
 import UsersConteiner from './components/Users/UsersConteiner';
+import ProfileContainer from './components/Profile/ProfileContainer';
 
 
 const App = (props) => { // это фун-ная компанента с объектом props
@@ -22,7 +22,7 @@ const App = (props) => { // это фун-ная компанента с объ�
         <Route path='/Dialogs'   //Route следит за URL и загружается если path'ы совпадают
           render={() => <DialogsContainer />} />
         <Route path='/Profile'
-          render={() => <Profile />} />
+          render={() => <ProfileContainer />} />
         <Route path='/News'
           render={() => <News />} />
         <Route path='/Music'

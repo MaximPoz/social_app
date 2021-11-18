@@ -1,6 +1,7 @@
 import React from "react";
 import styles from './Users.module.css';
 import flyCat from '../../assets/image/flyCat.png'
+import { NavLink } from "react-router-dom";
 
 
 let Users = (props) => {
@@ -16,8 +17,10 @@ let Users = (props) => {
     {
         props.users.map(u => <div key={u.id}>
             <span>
-                <div>
+                <div className='avaUsers'>
+                    <NavLink to={'/Profile'}>
                     <img src={u.photos.small != null ? u.photos.small : flyCat} className={styles.usersPhoto} />
+                    </NavLink>
                 </div>
                 <div>
                     {u.followed
@@ -39,10 +42,10 @@ let Users = (props) => {
         </div>)
         
     }
-     <div>
+     <div className={styles.allPages}>
         {pages.map(p => {
-            return <span className={props.currentPage === p && styles.selectPage} //если текущая страница ровна "p" тогда selectPage присобачится внутрь класса
-                onClick={(e) => { props.onPageChanged(p) }}>  {p}</span>  //при нажатии на кнопку установи текущую страницу
+            return  <span className={props.currentPage === p && styles.selectPage} //если текущая страница ровна "p" тогда selectPage присобачится внутрь класса
+                onClick={(e) => { props.onPageChanged(p) }}>  {p}</span> //при нажатии на кнопку установи текущую страницу
         })}
     </div>
 </div>
