@@ -18,7 +18,10 @@ let Users = (props) => {
         props.users.map(u => <div key={u.id}>
             <span>
                 <div className='avaUsers'>
-                    <NavLink to={'/Profile'}>
+                
+                    <NavLink to={'/profile/'    //+ u.id это id пользователя в api/1.0/users
+                    + u.id}>   
+
                     <img src={u.photos.small != null ? u.photos.small : flyCat} className={styles.usersPhoto} />
                     </NavLink>
                 </div>
@@ -35,8 +38,8 @@ let Users = (props) => {
                     <div>{u.status}</div>
                 </span>
                 <span>
-                    <div>{"u.location.contry"}</div>
-                    <div>{"u.location.city"}</div>
+                    <div>{"Страна загнивающая"}</div>
+                    <div>{"Живу в жопе"}</div>
                 </span>
             </span>
         </div>)

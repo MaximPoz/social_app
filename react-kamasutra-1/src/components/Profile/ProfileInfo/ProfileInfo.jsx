@@ -17,7 +17,7 @@ const ProfileInfo = (props) => {
                <div><h3>Контакты: </h3>{props.profile.contacts.facebook}</div>
                <div><h3>Ищу работу: </h3>{props.profile.lookingForAJob == true 
                ? <img className={s.avaWorkStatus} src='https://c.tenor.com/oTeBa4EVepMAAAAC/business-cat-working.gif'></img> 
-               : <img className={s.avaWorkStatus} src='https://lh3.googleusercontent.com/proxy/hL7WZj0CfHGYTEkFXInbetdHg9w89e8Ut3HNmtwAEoYWVxJljIC58CSe-8_sRxOcIYXdGzheBDiEUa9sZwNSKP3Tk94'></img>
+               : <img className={s.avaWorkStatus} src='https://previews.123rf.com/images/ratoca/ratoca1904/ratoca190400030/124066330-funny-cat-in-relax-moment.jpg'></img>
                }</div>
                <div><h3>Какую работу мне бы хотелось: </h3>{props.profile.lookingForAJobDescription}</div>
             </div>

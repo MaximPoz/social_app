@@ -8,7 +8,7 @@ import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
 import { updateNewMessageText } from './redux/store';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
-import UsersConteiner from './components/Users/UsersConteiner';
+import UsersContainer from './components/Users/UsersContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
 
 
@@ -21,7 +21,7 @@ const App = (props) => { // это фун-ная компанента с объ�
       <div className='app-wrapper-content'>
         <Route path='/Dialogs'   //Route следит за URL и загружается если path'ы совпадают
           render={() => <DialogsContainer />} />
-        <Route path='/Profile'
+        <Route path='/profile/:userId?'  // creating params (/:userId) for profile at user ID
           render={() => <ProfileContainer />} />
         <Route path='/News'
           render={() => <News />} />
@@ -30,7 +30,7 @@ const App = (props) => { // это фун-ная компанента с объ�
         <Route path='/Settings'
           render={() => <Settings />} />
         <Route path='/Users'
-          render={() => <UsersConteiner />} />
+          render={() => <UsersContainer />} />
       </div>
     </div>
   );
