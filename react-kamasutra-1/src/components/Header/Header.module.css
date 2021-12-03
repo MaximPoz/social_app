@@ -4,7 +4,15 @@
     width: 1535px;
     height: 54px;
   }
+
   .header img{
     width: 200px;
     height: 65px;
+  }
+
+  .loginBlock{
+    float:right
+  }
+  .loginBlock a{
+    color:black
   }

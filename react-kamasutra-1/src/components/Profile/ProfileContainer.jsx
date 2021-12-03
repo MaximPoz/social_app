@@ -10,7 +10,7 @@ class ProfileContainer extends React.Component {
     componentDidMount() {                            // Происходит монтирование компоненты с сервера (запрос на сервак)
         let userId = this.props.match.params.userId;
         if (!userId) {
-            userId = 2;
+            userId = 21143;
         }
         axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + userId) // запрос на сервер
             .then(response => {                          //когда сервак даст ответ затем (then) выполни стрелочную ф-цию
