@@ -9,7 +9,9 @@ class UsersContainer extends React.Component { //расширяем что бы 
 
     componentDidMount() {  // Происходит монтирование компоненты с сервера (запрос на сервак)
         this.props.toggleIsFetching(true) //когла идёт запрос на сервер, включить  анимацию загрузки
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`) // запрос на сервер
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`,{// запрос на сервер
+        withCredentials: true //  исп. куки, показать что я авторизован
+    }) 
             .then(response => {                          //когда сервак даст ответ затем (then) выполни стрелочную ф-цию
                 this.props.toggleIsFetching(false) //когда запрос приходит, выключаем  анимацию загрузки
                 this.props.setUsers(response.data.items) //придёт response у него мы берём из data'ы items и totalCount,
@@ -21,7 +23,9 @@ class UsersContainer extends React.Component { //расширяем что бы 
     onPageChanged = (pageNumber) => {
         this.props.setCurrentPage(pageNumber);
         this.props.toggleIsFetching(true) //когла идёт запрос на сервер, включить  анимацию загрузки
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`) // запрос на сервер
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`,{// запрос на сервер
+            withCredentials: true //  исп. куки, показать что я авторизован
+        }) 
             .then(response => {                          //когда сервак даст ответ затем (then) выполни стрелочную ф-цию
              this.props.toggleIsFetching(false)          //когда запрос приходит, выключаем анимацию загрузки
              this.props.setUsers(response.data.items)    //придёт response у него мы берём data, 

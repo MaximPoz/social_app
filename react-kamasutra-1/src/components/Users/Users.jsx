@@ -2,6 +2,7 @@ import React from "react";
 import styles from './Users.module.css';
 import flyCat from '../../assets/image/flyCat.png'
 import { NavLink } from "react-router-dom";
+import* as axios from "axios";
 
 
 let Users = (props) => {
@@ -27,8 +28,37 @@ let Users = (props) => {
                 </div>
                 <div>
                     {u.followed
-                        ? <button onClick={() => { props.unfollow(u.id) }}>UnFollow</button> //если нажать на кнопку вызови unfollow и передай туда id
-                        : <button onClick={() => { props.follow(u.id) }}>Follow</button>    //если нажать на кнопку вызови follow и передай туда id
+                        ? <button onClick={() => {
+                            axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, { // отписаться от определённого пользователя (u) по id 
+                                withCredentials: true, // только для авторизованных (позволяет исп. куки) объект настройки идёт вторым
+                                headers: {
+                                    "API-KEY" : "0adce104-060c-438f-85cd-312f385d5e63"
+                                }}) 
+                                .then(response => {                          //когда сервак даст ответ затем (then) выполни стрелочную ф-цию
+                                if( response.data.resultCode == 0 ){ // если resultCode пришел 0, значит ошибок нет
+                                    props.unfollow(u.id)   //  и выполняется отписка от определённого пользователя
+                                }
+                            });
+                             
+                             }}>UnFollow</button> //если нажать на кнопку вызови unfollow и передай туда id
+
+                        : <button onClick={() => {
+
+                            axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {}, {// подписаться на определённого пользователя (u) по id 
+                                withCredentials: true, // только для авторизованных (позволяет исп. куки) объект настройки идёт третим
+                                headers: {
+                                    "API-KEY" : "0adce104-060c-438f-85cd-312f385d5e63"
+                                }}) 
+                                .then(response => {                          //когда сервак даст ответ затем (then) выполни стрелочную ф-цию
+                                if( response.data.resultCode == 0 ){//см. выше
+                                    props.follow(u.id) //см. выше
+                                }
+                            });                                          
+
+
+                             
+                             }}>Follow</button>    //если нажать на кнопку вызови follow и передай туда id
+
                     }
                 </div>
             </span>
