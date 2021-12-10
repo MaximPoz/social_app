@@ -1,34 +1,31 @@
-import * as axios from "axios";
 import React from "react";
 import { connect } from "react-redux";
 import { follow, setUsers, unfollow, setCurrentPage, setTotalUsersCount, toggleIsFetching } from "../../redux/users-reducer";
 import Users from './Users';
 import Preloader from "../common/Preloader/Preloader";
+import { userAPI } from "../../api/api";
+
 
 class UsersContainer extends React.Component { //расширяем что бы реакт мог взаимодействовать с User
 
     componentDidMount() {  // Происходит монтирование компоненты с сервера (запрос на сервак)
         this.props.toggleIsFetching(true) //когла идёт запрос на сервер, включить  анимацию загрузки
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`,{// запрос на сервер
-        withCredentials: true //  исп. куки, показать что я авторизован
-    }) 
-            .then(response => {                          //когда сервак даст ответ затем (then) выполни стрелочную ф-цию
+        
+        userAPI.getUsers(this.props.currentPage, this.props.pageSize).then(data => {  //когда сервак даст ответ затем (then) выполни стрелочную ф-цию (getUsers инкапсулировал get запрос на сервер)
                 this.props.toggleIsFetching(false) //когда запрос приходит, выключаем  анимацию загрузки
-                this.props.setUsers(response.data.items) //придёт response у него мы берём из data'ы items и totalCount,
-                this.props.setTotalUsersCount(response.data.totalCount)
+                this.props.setUsers(data.items) //придёт response у него мы берём из data'ы items и totalCount,
+                this.props.setTotalUsersCount(data.totalCount)
             });                                         //и пробрасываем через props в setUsers контейнера
     }
 
 
     onPageChanged = (pageNumber) => {
         this.props.setCurrentPage(pageNumber);
-        this.props.toggleIsFetching(true) //когла идёт запрос на сервер, включить  анимацию загрузки
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`,{// запрос на сервер
-            withCredentials: true //  исп. куки, показать что я авторизован
-        }) 
-            .then(response => {                          //когда сервак даст ответ затем (then) выполни стрелочную ф-цию
+        this.props.toggleIsFetching(true) //когда идёт запрос на сервер, включить  анимацию загрузки
+
+        userAPI.getUsers(pageNumber, this.props.pageSize).then(data => {  //когда сервак даст ответ затем (then) выполни стрелочную ф-цию (getUsers инкапсулировал get запрос на сервер)
              this.props.toggleIsFetching(false)          //когда запрос приходит, выключаем анимацию загрузки
-             this.props.setUsers(response.data.items)    //придёт response у него мы берём data, 
+             this.props.setUsers(data.items)    //придёт response у него мы берём data, 
             });                                          //и пробрасываем через props в setUsers контейнера
     }
 
