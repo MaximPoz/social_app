@@ -20,7 +20,7 @@ const MyPosts = (props) => {
 
     let onPostChange = (e) => {  
         let text = e.target.value;
-        props.updateActionPostText(text)
+        props.updateActionPostText(text)  //отправляем в контейнерную компаненту
     }
 
     return (
@@ -28,8 +28,9 @@ const MyPosts = (props) => {
             <h3> My posts </h3>
             <div>
                 <textarea onChange={onPostChange}    //onCh. следит за тем что мы вводим и отправляет это в функцию onPCh
-                placeholder="Пиши что на душе"
-                    value={props.newPostText}/>
+                placeholder = "Пиши что на душе"
+                    value={props.newPostText} // данные из state которые прошли через контейнерную компоненту и редьюсер!!!                       
+                    /> 
                 </div>
             <div>
                 <button onClick={onAddPost}> Add post</button>

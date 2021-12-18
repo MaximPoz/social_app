@@ -14,14 +14,14 @@ let mapDispatchToProps = (dispatch) => {
     return {
         updateActionPostText: (text) => {
             let action = updateActionPostText(text)
-            dispatch(action);
+            dispatch(action);  //то что ввели в textarea отправляем в dialog-reduser 
         },
         addPost: () => {
             dispatch(addPostActionCreator());
         }
     }
 }
-const MyPostsConteiner = connect(mapStateToProps, mapDispatchToProps)(MyPosts) //MyPosts перересуйся когд в тебе измениться posts
+const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts) //MyPosts перересуйся когд в тебе измениться posts
 
 
-export default MyPostsConteiner;
+export default MyPostsContainer;

@@ -4,6 +4,7 @@ const SET_USERS = 'SET_USERS';
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT';
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'; //переключи значение из фетчинга
+const TOGGLE_IS_FOLLOWING_PROGRESS = 'TOGGLE_IS_FOLLOWING_PROGRESS'; //переключи значение из запроса на подписку
 
 let initialState = {
     users: [],
@@ -11,6 +12,7 @@ let initialState = {
     totalUsersCount: 0,  //общее кол пользователей
     currentPage: 1, // с какой страницы начать
     isFetching: true, //состояние запроса
+    followingInProgress: [], // в каком состоянии прогресс подписки, если запрос обрабатывается то false
 };
 
 const usersReducer = (state = initialState, action) => {  //редьюсер принимает старый state и меняет его на основании action
@@ -54,6 +56,13 @@ const usersReducer = (state = initialState, action) => {  //редьюсер п�
             return { ...state, isFetching: action.isFetching } //создаём копию stat'a и дополняем её action'ом. !!!Dispatch'ит (отправляет) только объект!!!
         }
 
+        case TOGGLE_IS_FOLLOWING_PROGRESS: {
+            return { ...state,
+                 followingInProgress: action.isFetching
+                 ? [...state.followingInProgress, action.userId] // добавить в state и дизейблить ту что пришла в userId
+                 : state.followingInProgress.filter(id => id !=action.userId) } //пропускаем только ту id которая не ровна той id которая в акшине пришла (фильтрация уже возвращает нам копию массива  )
+        }
+
         default:                                     //если не соответствует не одному action тогда вернуть state
             return state;
     }
@@ -65,5 +74,6 @@ export const setUsers = (users) => ({ type: SET_USERS, users })
 export const setCurrentPage = (currentPage) => ({ type: SET_CURRENT_PAGE, currentPage })
 export const setTotalUsersCount = (totalUsersCount) => ({ type: SET_TOTAL_USERS_COUNT, count: totalUsersCount })
 export const toggleIsFetching = (isFetching) => ({type: TOGGLE_IS_FETCHING, isFetching})
+export const toggleFollowingProgress = (isFetching, userId) => ({type: TOGGLE_IS_FOLLOWING_PROGRESS, isFetching, userId})
 
 export default usersReducer;
