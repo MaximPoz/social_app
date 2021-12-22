@@ -1,3 +1,5 @@
+import { userAPI } from "../api/api";
+
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'; // ну тут вроде понятно, объявление в глобальную константу
 const ADD_POST = 'ADD-POST';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
@@ -42,5 +44,13 @@ const profileReducer = (state = initialState, action) => {
 export const addPostActionCreator = () => ({ type: ADD_POST })   //что бы не писать в UI тип данных мы обьявили его тут и передали в MyPosts
 export const updateActionPostText = (text) => ({ type: UPDATE_NEW_POST_TEXT, text: text })
 export const setUserProfile = (profile) => ({ type: SET_USER_PROFILE, profile }) 
+
+export const getUserProfile =(userId) => {
+    return(dispatch)=>{
+    userAPI.getProfile(userId).then(response => {     //когда сервак даст ответ затем (then) выполни стрелочную ф-цию
+                dispatch(setUserProfile(response.data)) //придёт response у него мы берём из data'ы,
+            });                                          //и пробрасываем через props в setUserProfile контейнера
+}
+}
 
 export default profileReducer;

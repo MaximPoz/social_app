@@ -17,15 +17,22 @@ export const userAPI = {
         })
     },
 
-    authMe(){
-     return instance.get(`https://social-network.samuraijs.com/api/1.0/auth/me`)// запрос на сервер для получения аунтификации
-    },
-
     follow(userId) {
-        return instance.post(`https://social-network.samuraijs.com/api/1.0/follow/${userId}`)
+        return instance.post(`follow/${userId}`)
     },
 
     unfollow(userId) {
-        return instance.delete(`https://social-network.samuraijs.com/api/1.0/follow/${userId}`)
-    }
+        return instance.delete(`follow/${userId}`)
+    },
+
+    getProfile(userId){
+        return instance.get(`profile/` + userId); // запрос на сервер
+    },
 }
+
+    export const authAPI = {
+        me(){
+           return instance.get(`auth/me`)}
+        }
+    
+
