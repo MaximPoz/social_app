@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import DialogItem from './DialogItem/DialogItem';
 import s from './Dialogs.module.css';
 import Message from './Message/Message';
@@ -20,6 +21,9 @@ const Dialogs = (props) => {
         let body = e.target.value; //target - textarea, value - значение, e(event - событие) - в данном случае onChange
         props.updateActionMessageText(body)
     }
+
+    if (!props.isAuth)
+        return <Redirect to = {"/login"} />;
 
     return (
         <div className={s.dialogs}>
