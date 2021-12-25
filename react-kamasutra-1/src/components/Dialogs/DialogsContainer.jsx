@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { whisAuthRedirect } from '../../HOC/whisAuthRedirect';
 import { sendMessageActionCreator, updateActionMessageText } from '../../redux/dialogs-reducer';
 import Dialogs from './Dialogs';
 
@@ -7,10 +8,11 @@ import Dialogs from './Dialogs';
 let mapStateToProps = (state) =>{
     return{
         dialogsPage: state.dialogsPage,
-        newMessageBody: state.dialogsPage.newMessageBody,
-        isAuth: state.auth.isAuth
+        newMessageBody: state.dialogsPage.newMessageBody
     }
 }
+
+
 
 let mapDispatchToProps = (dispatch) => {
 
@@ -24,6 +26,8 @@ let mapDispatchToProps = (dispatch) => {
     }
 }
 
-const DialogsContainer = connect (mapStateToProps, mapDispatchToProps) (Dialogs);
+let AuthRedirectComponent = whisAuthRedirect(Dialogs); //оборачивает компоненту Dialogs в whisAuthRedirect (HOC)
+
+const DialogsContainer = connect (mapStateToProps, mapDispatchToProps) (AuthRedirectComponent);
 
 export default DialogsContainer;
