@@ -4,6 +4,7 @@ import { getUserProfile } from '../../redux/profile-reducer';
 import { connect } from 'react-redux';
 import { Redirect, withRouter } from 'react-router-dom';
 import { whisAuthRedirect } from '../../HOC/whisAuthRedirect';
+import { compose } from 'redux';
 
 
 class ProfileContainer extends React.Component {
@@ -26,12 +27,13 @@ class ProfileContainer extends React.Component {
     }
 }
 
-let AuthRedirectComponent = whisAuthRedirect(ProfileContainer); //оборачивает компоненту Dialogs в whisAuthRedirect (HOC)
-
 
 let mapStateToProps = (state) => ({profile: state.profilePage.profile,})
 
 
-let WithUrlDataContainerComponent = withRouter(AuthRedirectComponent) //withRouter creating component which wraps component and gives to this component URL
 
-export default connect(mapStateToProps, { getUserProfile })(WithUrlDataContainerComponent); // connect создаёт вокруг компаненты WithUrlDataContainerComponent ещё одну, и заливает туда данные из mapStateToProps и setUserProfile (store)
+export default compose(
+    connect(mapStateToProps, { getUserProfile }), // connect создаёт вокруг компаненты WithUrlDataContainerComponent ещё одну, и заливает туда данные из mapStateToProps и setUserProfile (store)
+    withRouter, //withRouter creating component which wraps component and gives to this component URL
+    whisAuthRedirect  //оборачивает компоненту Dialogs в whisAuthRedirect (HOC)
+)(ProfileContainer) //compose возми ProfileContainer и закинь их в whisAuthRedirect, потом в withRouter, а этот результат закинь в connect;

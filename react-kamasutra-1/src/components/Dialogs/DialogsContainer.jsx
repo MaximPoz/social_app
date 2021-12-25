@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { compose } from 'redux';
 import { whisAuthRedirect } from '../../HOC/whisAuthRedirect';
 import { sendMessageActionCreator, updateActionMessageText } from '../../redux/dialogs-reducer';
 import Dialogs from './Dialogs';
@@ -26,8 +27,11 @@ let mapDispatchToProps = (dispatch) => {
     }
 }
 
-let AuthRedirectComponent = whisAuthRedirect(Dialogs); //оборачивает компоненту Dialogs в whisAuthRedirect (HOC)
+let AuthRedirectComponent = whisAuthRedirect(Dialogs); 
 
 const DialogsContainer = connect (mapStateToProps, mapDispatchToProps) (AuthRedirectComponent);
 
-export default DialogsContainer;
+export default compose( 
+    connect (mapStateToProps, mapDispatchToProps), //берёт диалоги и отдаёт им нужную инфу из state и reducer 
+    whisAuthRedirect, //оборачивает компоненту Dialogs в whisAuthRedirect (HOC)
+ )(Dialogs)  //compose возми диалоги и закинь их в whisAuthRedirect, а этот результат закинь в connect;

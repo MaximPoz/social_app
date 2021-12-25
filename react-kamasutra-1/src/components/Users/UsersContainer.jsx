@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { follow, unfollow, setCurrentPage, toggleFollowingProgress, getUser } from "../../redux/users-reducer";
 import Users from './Users';
 import Preloader from "../common/Preloader/Preloader";
+import { compose } from "redux";
+import { whisAuthRedirect } from "../../HOC/whisAuthRedirect";
 
 
 
@@ -49,9 +51,7 @@ let mapStateToProps = (state) => { //это ф-ция которая прини�
 }
 
 
-export default connect(mapStateToProps, 
-    {follow, unfollow, 
-    setCurrentPage, 
-    toggleFollowingProgress,
-    getUser})
-    (UsersContainer);
+export default compose (
+    connect(mapStateToProps, {follow, unfollow, setCurrentPage, toggleFollowingProgress,getUser}),
+    whisAuthRedirect)
+    (UsersContainer);//compose возми UsersContainer и закинь их в whisAuthRedirect, а этот результат закинь в connect;
