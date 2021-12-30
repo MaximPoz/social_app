@@ -11,7 +11,7 @@ class  HeaderContainer extends React.Component {
 
     componentDidMount() {  // Происходит монтирование компоненты с сервера (запрос на сервак)
 
-       this.props.getAuthUserData()
+       this.props.getAuthUserData() // получаем из auth-reduser проверку что мы залогиненны
     }
 
     render(){
@@ -20,8 +20,8 @@ class  HeaderContainer extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    isAuth: state.auth.isAuth,
-    login: state.auth.login,
+    isAuth: state.auth.isAuth, //получение флага isAuth (залогиненны мы или нет)
+    login: state.auth.login, //отрисовка login пользователя
 });
 
 export default connect (mapStateToProps, {getAuthUserData}) (HeaderContainer);

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 
 let mapStateToPropsRedirect = (state) =>{
-    return{isAuth: state.auth.isAuth}}
+    return{isAuth: state.auth.isAuth}}      //состояние флага isAuth находится в Heder
 
 export const whisAuthRedirect = (Component) => {
     class RedirectComponent extends React.Component{

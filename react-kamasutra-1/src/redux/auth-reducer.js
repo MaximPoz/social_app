@@ -29,9 +29,9 @@ const authReducer = (state = initialState, action) => {  //редьюсер пр
 export const setAuthUserData = ( userId, email, login ) => ({ type: SET_USER_DATA, data: { userId, email, login } })
 export const getAuthUserData = () => (dispatch) => {
     authAPI.me().then(response => {      //когда сервак даст ответ затем (then) выполни стрелочную ф-цию
-        if  (response.data.resultCode === 0) {
-            let {id, email, login} = response.data.data; // деструктуризируем
-            dispatch(setAuthUserData (id, email, login));
+        if  (response.data.resultCode === 0) {  //если resultCode = 0 тогда
+            let {id, email, login} = response.data.data; // мы берём из data'ы  id, email, login и выставляем флаг isAuth true
+            dispatch(setAuthUserData (id, email, login)); //и отправляем полученные данные в state через setAuthUserData
         }
     });
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import Preloader from '../../common/Preloader/Preloader';
 import s from './ProfileInfo.module.css';
+import ProfileStatus from './ProfileStatus';
 
 
 const ProfileInfo = (props) => {
@@ -12,6 +13,7 @@ const ProfileInfo = (props) => {
         <div>
             <div className={s.descriptionBlock}>
                <img src={props.profile.photos.large}/>
+               <ProfileStatus status={"free man"} textAr={"Пиши тут"} />
                <div><h3>Имя: {props.profile.fullName}</h3></div>
                <div><h3>Статус: </h3>{props.profile.aboutMe}</div>
                <div><h3>Контакты: </h3>{props.profile.contacts.facebook}</div>
