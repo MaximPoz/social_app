@@ -10,11 +10,11 @@ const instance = axios.create({
 
 
 export const userAPI = {
-    getUsers(currentPage=1, pageSize=10) {
+    getUsers(currentPage = 1, pageSize = 10) {
         return instance.get(`users?page=${currentPage}&count=${pageSize}`) // запрос на сервер
-        .then(response => {    // теперь нам get запрос возвращает из response только data
-            return response.data
-        })
+            .then(response => {    // теперь нам get запрос возвращает из response только data
+                return response.data
+            })
     },
 
     follow(userId) {
@@ -25,14 +25,36 @@ export const userAPI = {
         return instance.delete(`follow/${userId}`)
     },
 
-    getProfile(userId){
+    getProfile(userId) {
+        console.warn("Obsolete method. Please use profileAPI object ")
+        return profileAPI.getProfile(userId) // делегирование на другой метод
+    },
+}
+export const profileAPI = {
+    getUsers(currentPage = 1, pageSize = 10) {
+        return instance.get(`users?page=${currentPage}&count=${pageSize}`) // запрос на сервер
+            .then(response => {    // теперь нам get запрос возвращает из response только data
+                return response.data
+            })
+    },
+
+    getProfile(userId) {
         return instance.get(`profile/` + userId); // запрос на сервер
+    },
+    getStatus(userId) {
+        return instance.get(`profile/status/` + userId); // запрос на сервер
+    },
+    updateStatus(status) {
+        return instance.put(`profile/status`, {status: status}); // запрос на сервер
     },
 }
 
-    export const authAPI = {
-        me(){
-           return instance.get(`auth/me`)}
-        }
-    
+
+
+export const authAPI = {
+    me() {
+        return instance.get(`auth/me`)
+    }
+}
+
 

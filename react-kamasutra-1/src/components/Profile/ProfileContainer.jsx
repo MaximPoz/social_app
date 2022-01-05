@@ -1,6 +1,6 @@
 import React from 'react';
 import Profile from './Profile';
-import { getUserProfile } from '../../redux/profile-reducer';
+import { getUserProfile, getStatus, updateStatus } from '../../redux/profile-reducer';
 import { connect } from 'react-redux';
 import { Redirect, withRouter } from 'react-router-dom';
 import { whisAuthRedirect } from '../../HOC/whisAuthRedirect';
@@ -15,25 +15,30 @@ class ProfileContainer extends React.Component {
             userId = 21143;  // то установить данный ID
         }
         this.props.getUserProfile(userId);
+        this.props.getStatus(userId)
     }
 
     render() {
         return (
             <div>
                 <Profile {...this.props}
-                    profile={this.props.profile} />
+                    profile={this.props.profile}
+                    status={this.props.status} 
+                    updateStatus={this.props.updateStatus} />
             </div>
         )
     }
 }
 
 
-let mapStateToProps = (state) => ({profile: state.profilePage.profile,})
+let mapStateToProps = (state) => ({
+    profile: state.profilePage.profile,
+    status: state.profilePage.status})
 
 
 
 export default compose(
-    connect(mapStateToProps, { getUserProfile }), // connect создаёт вокруг компаненты WithUrlDataContainerComponent ещё одну, и заливает туда данные из mapStateToProps и setUserProfile (store)
+    connect(mapStateToProps, { getUserProfile, getStatus, updateStatus }), // connect создаёт вокруг компаненты WithUrlDataContainerComponent ещё одну, и заливает туда данные из mapStateToProps и setUserProfile (store)
     withRouter, //withRouter creating component which wraps component and gives to this component URL
     whisAuthRedirect  //оборачивает компоненту Dialogs в whisAuthRedirect (HOC)
 )(ProfileContainer) //compose возми ProfileContainer и закинь их в whisAuthRedirect, потом в withRouter, а этот результат закинь в connect;
