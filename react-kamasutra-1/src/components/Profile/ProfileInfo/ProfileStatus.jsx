@@ -23,18 +23,17 @@ onStatusChange=(e)=>{
         status: e.currentTarget.value
     })
 }
+
 componentDidUpdate(prevProps, prevState){ //prev значит увидеть прошлый props и state(componentDidUpdate позволяет нам обновить текущее состояние state)
+    
     if(prevProps.status != this.props.status){  // если предыдущий статус не равен текущиму 
         this.setState({
             status: this.props.status // покажи статус
         })
     }
-    let a = this.state;
-    let b = this.props;
-    console.log('КОМПОНЕНТА ОБНОВИЛАСЬ')
 }
+
     render() {
-        console.log('ОТРИСОВОЧКА')
         return (
             <div>
                 {!this.state.editMode && //если editMode = false  покажи status, при нажатии на кнопку обратись к методу activateEditMode

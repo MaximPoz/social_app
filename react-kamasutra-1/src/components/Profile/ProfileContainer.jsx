@@ -40,5 +40,5 @@ let mapStateToProps = (state) => ({
 export default compose(
     connect(mapStateToProps, { getUserProfile, getStatus, updateStatus }), // connect создаёт вокруг компаненты WithUrlDataContainerComponent ещё одну, и заливает туда данные из mapStateToProps и setUserProfile (store)
     withRouter, //withRouter creating component which wraps component and gives to this component URL
-    whisAuthRedirect  //оборачивает компоненту Dialogs в whisAuthRedirect (HOC)
+    // whisAuthRedirect  //оборачивает компоненту Dialogs в whisAuthRedirect (HOC)
 )(ProfileContainer) //compose возми ProfileContainer и закинь их в whisAuthRedirect, потом в withRouter, а этот результат закинь в connect;

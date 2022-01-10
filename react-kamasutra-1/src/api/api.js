@@ -30,14 +30,8 @@ export const userAPI = {
         return profileAPI.getProfile(userId) // делегирование на другой метод
     },
 }
-export const profileAPI = {
-    getUsers(currentPage = 1, pageSize = 10) {
-        return instance.get(`users?page=${currentPage}&count=${pageSize}`) // запрос на сервер
-            .then(response => {    // теперь нам get запрос возвращает из response только data
-                return response.data
-            })
-    },
 
+export const profileAPI = {
     getProfile(userId) {
         return instance.get(`profile/` + userId); // запрос на сервер
     },
@@ -56,5 +50,3 @@ export const authAPI = {
         return instance.get(`auth/me`)
     }
 }
-
-
