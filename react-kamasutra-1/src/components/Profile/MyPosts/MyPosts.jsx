@@ -1,5 +1,5 @@
 import React from 'react';
-import { Field, reduxForm } from 'redux-form';
+import AddPostForm from './AddPostForm/AddPostForm';
 import s from './MyPosts.module.css';
 import Post from './Post/Post';
 
@@ -19,16 +19,11 @@ const MyPosts = (props) => {
         props.addPost(value.newPost);
     }
 
-    let onPostChange = (e) => {
-        let text = e.target.value;
-        props.updateActionPostText(text)  //отправляем в контейнерную компаненту
-    }
-
     return (
         <div className={s.postsBlock}>
             <h3> My posts </h3>
 
-            <AddPostFormRedux onSubmit={addNewPost}/>
+            <AddPostForm onSubmit={addNewPost}/>
 
             <div className={s.posts}>
                 {postsElements}
@@ -38,20 +33,7 @@ const MyPosts = (props) => {
 
 }
 
-const AddPostForm = (props) => {
-    return (
-        <form onSubmit={props.handleSubmit}>
-            <div>
-            <Field component='textarea' name='newPost' placeholder="Пиши что на душе" />
-            </div>
-            <div>
-                <button> Add post</button>
-            </div>
-        </form>
-    )
-}
 
-const AddPostFormRedux = reduxForm({form: 'messageAddPostForm'})(AddPostForm)
 
 
 export default MyPosts;

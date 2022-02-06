@@ -1,6 +1,5 @@
 import { profileAPI, userAPI } from "../api/api";
 
-const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'; // ну тут вроде понятно, объявление в глобальную константу
 const ADD_POST = 'ADD-POST';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 const SET_STATUS = 'SET_STATUS';
@@ -11,7 +10,6 @@ let initialState = {
         { id: 2, message: 'ya tozhe', likesCount: '+21' },
         { id: 3, message: 'a ya zhenya', likesCount: '-12' }
     ],
-    newPostText: '',
     profile: null,
     status: ''
 };
@@ -28,12 +26,6 @@ const profileReducer = (state = initialState, action) => {
             }
         }
 
-        case UPDATE_NEW_POST_TEXT: {                  //но если action тип UPDATE_NEW_POST_TEXT тогда мы 
-            return {
-                ...state,                       //создаём копию state (копируется только state без внутренних массивов) что бы не изменять основной state
-                newPostText: action.text,       // отправляем текст который набирается в значение textarea в state.newPostText
-            }
-        }
 
         case SET_USER_PROFILE: {
             return {
@@ -53,7 +45,6 @@ const profileReducer = (state = initialState, action) => {
 }
 
 export const addPostActionCreator = (newPost) => ({ type: ADD_POST, newPost })   //что бы не писать в UI тип данных мы обьявили его тут и передали в MyPosts
-export const updateActionPostText = (text) => ({ type: UPDATE_NEW_POST_TEXT, text: text })
 export const setUserProfile = (profile) => ({ type: SET_USER_PROFILE, profile })
 export const setStatus = (status) => ({ type: SET_STATUS, status })
 

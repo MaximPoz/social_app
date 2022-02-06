@@ -1,5 +1,7 @@
 import React from 'react';
 import { Field, reduxForm } from "redux-form";
+import { required } from '../../utils/validators/validators';
+import { Input } from '../common/FormsControls/FormsControls';
 
 const LoginForm = (props) => {
     return (
@@ -8,14 +10,15 @@ const LoginForm = (props) => {
             <div>
                 <Field placeholder={"Login"}  //Компонент соединяет каждый input с store 
                     name={"login"}  // добавили name что бы в fields (полях) консоли в браузере было имя
-                    component={"input"}  // указал что компонента для ввода данных 
+                    component={Input}  // указал что компонента для ввода данных 
+                    validate={[required]}
                 />
             </div>
             <div>
-                <Field placeholder={"Password"} name={"password"} component={"input"} />
+                <Field placeholder={"Password"} name={"password"} component={Input} validate={[required]} />
             </div>
             <div>
-                <Field component={"input"} name={"rememberMe"} type={"checkbox"} /> remember me
+                <Field component={Input} name={"rememberMe"} type={"checkbox"}  /> remember me
             </div>
             <div>
                 <button>Login</button>

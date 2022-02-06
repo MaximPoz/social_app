@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import { reduxForm, Field } from 'redux-form';
+import AddMessageForm from './AddMessageForm/AddMessageForm';
 import DialogItem from './DialogItem/DialogItem';
 import s from './Dialogs.module.css';
 import Message from './Message/Message';
@@ -16,7 +16,7 @@ const Dialogs = (props) => {
         <Message message={m.message} key={m.id} />) //тут индекс m. Это делается что бы в консоли браузера не вылетала ошибка
 
 
-    let addNewMessage =(values) =>{ 
+    let addNewMessage = (values) => {
         props.sendMessage(values.newMessageBody);  //добовляем сообщение из AddMessageFormRedux onSubmit в контейнерную компоненту
     }
     if (!props.isAuth)
@@ -30,24 +30,12 @@ const Dialogs = (props) => {
             <div className={s.messages}>
                 <div>{messagesElements}</div>
             </div>
-            <AddMessageFormRedux onSubmit={addNewMessage}/>
+            <AddMessageForm onSubmit={addNewMessage} />
 
         </div>
     )
 }
 
-const AddMessageForm = (props) => {
-    return (
-        <form onSubmit={props.handleSubmit}>
-            <div className={s.area}>
-                <Field component='textarea' name='newMessageBody' placeholder='Введите сообщение' />
 
-                <div><button>Add Message</button></div>
-            </div>
-        </form>
-    )
-}
-
-const AddMessageFormRedux = reduxForm({ form: "dialogAddMessageForm" })(AddMessageForm); // название формы и компонента которую мы оборачиваем
 
 export default Dialogs;
