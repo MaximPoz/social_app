@@ -20,7 +20,7 @@ const profileReducer = (state = initialState, action) => {
 
     switch (action.type) {  //если объект action имеет тип ADD_POST тогда выполняем этот код (добовляем пост из textarea)
         case ADD_POST: {
-            let text = state.newPostText;
+            let text = action.newPost;
             return {
                 ...state,
                 posts: [{ id: 4, message: text, likesCount: 0 }, ...state.posts],  // пушит в посты         //создаём копию state (копируется только state без внутренних массивов) что бы не изменять основной state
@@ -52,7 +52,7 @@ const profileReducer = (state = initialState, action) => {
     }
 }
 
-export const addPostActionCreator = () => ({ type: ADD_POST })   //что бы не писать в UI тип данных мы обьявили его тут и передали в MyPosts
+export const addPostActionCreator = (newPost) => ({ type: ADD_POST, newPost })   //что бы не писать в UI тип данных мы обьявили его тут и передали в MyPosts
 export const updateActionPostText = (text) => ({ type: UPDATE_NEW_POST_TEXT, text: text })
 export const setUserProfile = (profile) => ({ type: SET_USER_PROFILE, profile })
 export const setStatus = (status) => ({ type: SET_STATUS, status })

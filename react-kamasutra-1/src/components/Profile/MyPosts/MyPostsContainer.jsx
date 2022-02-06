@@ -12,12 +12,8 @@ let mapStateToProps = (state) => {  //при изменении state запус
 
 let mapDispatchToProps = (dispatch) => {
     return {
-        updateActionPostText: (text) => {
-            let action = updateActionPostText(text)
-            dispatch(action);  //то что ввели в textarea отправляем в dialog-reduser 
-        },
-        addPost: () => {
-            dispatch(addPostActionCreator());
+        addPost: (newPost) => {
+            dispatch(addPostActionCreator(newPost));
         }
     }
 }

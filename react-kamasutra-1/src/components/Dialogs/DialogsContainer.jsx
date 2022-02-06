@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { whisAuthRedirect } from '../../HOC/whisAuthRedirect';
-import { sendMessageActionCreator, updateActionMessageText } from '../../redux/dialogs-reducer';
+import { sendMessageActionCreator } from '../../redux/dialogs-reducer';
 import Dialogs from './Dialogs';
 
 
@@ -18,11 +18,8 @@ let mapStateToProps = (state) =>{
 let mapDispatchToProps = (dispatch) => {
 
     return{
-        updateActionMessageText: (body) => {
-            dispatch(updateActionMessageText(body));
-        },
-        sendMessage: () => {
-            dispatch(sendMessageActionCreator());
+        sendMessage: (newMessageBody) => {
+            dispatch(sendMessageActionCreator(newMessageBody)); //пробрасываем сообщение (newMessageBody) в action dialogs-reducer 
         },
     }
 }

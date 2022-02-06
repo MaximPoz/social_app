@@ -1,5 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
+import { reduxForm, Field } from 'redux-form';
 import DialogItem from './DialogItem/DialogItem';
 import s from './Dialogs.module.css';
 import Message from './Message/Message';
@@ -14,16 +15,12 @@ const Dialogs = (props) => {
     let messagesElements = state.messages.map(m =>
         <Message message={m.message} key={m.id} />) //тут индекс m. Это делается что бы в консоли браузера не вылетала ошибка
 
-    let addMessage = () =>
-        props.sendMessage();  //вызываем action из state.js (добовляем сообщение)
 
-    let onMessageChange = (e) => {
-        let body = e.target.value; //target - textarea, value - значение, e(event - событие) - в данном случае onChange
-        props.updateActionMessageText(body)
+    let addNewMessage =(values) =>{ 
+        props.sendMessage(values.newMessageBody);  //добовляем сообщение из AddMessageFormRedux onSubmit в контейнерную компоненту
     }
-
     if (!props.isAuth)
-        return <Redirect to = {"/login"} />;
+        return <Redirect to={"/login"} />;
 
     return (
         <div className={s.dialogs}>
@@ -31,15 +28,26 @@ const Dialogs = (props) => {
                 {dialogsElements}</div>
 
             <div className={s.messages}>
-                {messagesElements}
-                <div className={s.area}>
-                    <textarea onChange={onMessageChange} // value берёт значение из state.newMessageBody
-                    placeholder="Введите сообщение"
-                        value={props.newMessageBody} />
-                    <div><button onClick={addMessage}>Add Message</button></div>
-                </div>
+                <div>{messagesElements}</div>
             </div>
+            <AddMessageFormRedux onSubmit={addNewMessage}/>
+
         </div>
     )
 }
+
+const AddMessageForm = (props) => {
+    return (
+        <form onSubmit={props.handleSubmit}>
+            <div className={s.area}>
+                <Field component='textarea' name='newMessageBody' placeholder='Введите сообщение' />
+
+                <div><button>Add Message</button></div>
+            </div>
+        </form>
+    )
+}
+
+const AddMessageFormRedux = reduxForm({ form: "dialogAddMessageForm" })(AddMessageForm); // название формы и компонента которую мы оборачиваем
+
 export default Dialogs;
