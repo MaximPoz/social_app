@@ -1,8 +1,6 @@
-import * as axios from 'axios';
 import React from 'react';
 import { connect } from 'react-redux';
-import { authAPI } from '../../api/api';
-import { getAuthUserData } from '../../redux/auth-reducer';
+import { getAuthUserData, logout } from '../../redux/auth-reducer';
 import Header from './Header'
 
 
@@ -24,4 +22,4 @@ const mapStateToProps = (state) => ({
     login: state.auth.login, //отрисовка login пользователя
 });
 
-export default connect (mapStateToProps, {getAuthUserData}) (HeaderContainer);
+export default connect (mapStateToProps, {getAuthUserData, logout}) (HeaderContainer);

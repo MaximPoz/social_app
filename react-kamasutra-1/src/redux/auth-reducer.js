@@ -17,8 +17,7 @@ const authReducer = (state = initialState, action) => {  //редьюсер пр
         case SET_USER_DATA: 
             return {        //мы возвращаем копию всего state'a
                 ...state,
-                ...action.data,
-                isAuth: true,
+                ...action.payload
             }
 
         default:                                     //если не соответствует не одному action тогда вернуть state
@@ -26,14 +25,32 @@ const authReducer = (state = initialState, action) => {  //редьюсер пр
     }
 }
 
-export const setAuthUserData = ( userId, email, login ) => ({ type: SET_USER_DATA, data: { userId, email, login } })
+export const setAuthUserData = ( userId, email, login, isAuth ) => ({ type: SET_USER_DATA, payload: { userId, email, login, isAuth } })
 export const getAuthUserData = () => (dispatch) => {
     authAPI.me().then(response => {      //когда сервак даст ответ затем (then) выполни стрелочную ф-цию
         if  (response.data.resultCode === 0) {  //если resultCode = 0 тогда
             let {id, email, login} = response.data.data; // мы берём из data'ы  id, email, login и выставляем флаг isAuth true
-            dispatch(setAuthUserData (id, email, login)); //и отправляем полученные данные в state через setAuthUserData
+            dispatch(setAuthUserData (id, email, login, true)); //и отправляем полученные данные в state через setAuthUserData
         }
     });
 }
+
+export const login = (email, password, rememberMe) => (dispatch) => {
+    authAPI.login(email, password, rememberMe).then(response => {      //когда сервак даст ответ затем (then) выполни стрелочную ф-цию
+        if  (response.data.resultCode === 0) {  //если resultCode = 0 тогда
+            dispatch(getAuthUserData ()); //и отправляем полученные данные в state через getAuthUserData
+        }
+    });
+}
+
+
+export const logout = (email, password, rememberMe) => (dispatch) => {
+    authAPI.logout().then(response => {      //когда сервак даст ответ затем (then) выполни стрелочную ф-цию
+        if  (response.data.resultCode === 0) {  //если resultCode = 0 тогда
+            dispatch(setAuthUserData (null, null, null, false)); // зануляем 
+        }
+    });
+}
+
 
 export default authReducer;
