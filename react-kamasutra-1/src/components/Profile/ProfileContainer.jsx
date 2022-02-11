@@ -12,7 +12,7 @@ class ProfileContainer extends React.Component {
     componentDidMount() {                            // Происходит монтирование компоненты с сервера (запрос на сервак)
         let userId = this.props.match.params.userId; //принимает из пропсов userId которые приходят из запросо на сервер
         if (!userId) {  //если не получили ID 
-            userId = 21143;  // то установить данный ID
+            userId = this.props.authorizedUserId;  // то установить данный ID из Auth
         }
         this.props.getUserProfile(userId);
         this.props.getStatus(userId)
@@ -33,7 +33,10 @@ class ProfileContainer extends React.Component {
 
 let mapStateToProps = (state) => ({
     profile: state.profilePage.profile,
-    status: state.profilePage.status})
+    status: state.profilePage.status,
+    authorizedUserId: state.auth.userId,
+    isAuth: state.auth.isAuth
+})
 
 
 
