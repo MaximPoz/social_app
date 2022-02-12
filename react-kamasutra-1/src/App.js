@@ -1,8 +1,8 @@
-import React from 'react'; 
+import React from 'react';
 import './App.css';
 import Nav from './components/Navbar/Nav';
 import News from './components/News/News'
-import {  Route } from 'react-router-dom';
+import { Route, withRouter } from 'react-router-dom';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
@@ -10,35 +10,53 @@ import UsersContainer from './components/Users/UsersContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
 import LoginPage from './components/Login/Login';
+import { Component } from 'react';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { initializeApp } from './redux/app-reducer';
+import Preloader from './components/common/Preloader/Preloader';
 
 
-const App = (props) => { // это фун-ная компонента с объектом props
 
-  return (
-    <div className='app-wrapper'>
-      <HeaderContainer />
-      <Nav />
-      <div className='app-wrapper-content'>
-        <Route path='/Dialogs'   //Route следит за URL и загружается если path'ы совпадают
-          render={() => <DialogsContainer />} />
-        <Route path='/profile/:userId?'  // creating params (/:userId) for profile at user ID
-          render={() => <ProfileContainer />} />
-        <Route path='/News'
-          render={() => <News />} />
-        <Route path='/Music'
-          render={() => <Music />} />
-        <Route path='/Settings'
-          render={() => <Settings />} />
-        <Route path='/Users'
-          render={() => <UsersContainer />} />
-        <Route path='/login'
-          render={() => <LoginPage />} />
+class App extends Component {
+
+  componentDidMount() {  // Происходит монтирование компоненты с сервера (запрос на сервак)
+    this.props.initializeApp () // получаем из auth-reduser проверку что мы залогиненны
+  }
+
+  render() {
+      if(!this.props.initialized) {
+        return <Preloader />
+      }
+    return (
+      <div className='app-wrapper'>
+        <HeaderContainer />
+        <Nav />
+        <div className='app-wrapper-content'>
+          <Route path='/Dialogs'   //Route следит за URL и загружается если path'ы совпадают
+            render={() => <DialogsContainer />} />
+          <Route path='/profile/:userId?'  // creating params (/:userId) for profile at user ID
+            render={() => <ProfileContainer />} />
+          <Route path='/News'
+            render={() => <News />} />
+          <Route path='/Music'
+            render={() => <Music />} />
+          <Route path='/Settings'
+            render={() => <Settings />} />
+          <Route path='/Users'
+            render={() => <UsersContainer />} />
+          <Route path='/login'
+            render={() => <LoginPage />} />
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+  initialized: state.app.initialized
+})
 
-
-//<Profile posts={props.posts}/> это props Profile'ов (момент отрисовки Profile)
+export default compose(
+            withRouter,   // для роутов (иначе не сможем переходить по роутам)
+            connect(mapStateToProps, { initializeApp })) (App); // когда мы конектим компоненту с роутоми, роутинг сбивается

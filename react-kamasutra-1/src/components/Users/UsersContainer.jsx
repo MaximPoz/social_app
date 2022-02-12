@@ -52,6 +52,5 @@ let mapStateToProps = (state) => { //это ф-ция которая прини�
 
 
 export default compose (
-    connect(mapStateToProps, {follow, unfollow, setCurrentPage, toggleFollowingProgress,getUser}),
-    whisAuthRedirect)
+    connect(mapStateToProps, {follow, unfollow, setCurrentPage, toggleFollowingProgress,getUser}))
     (UsersContainer);//compose возми UsersContainer и закинь их в whisAuthRedirect, а этот результат закинь в connect;
