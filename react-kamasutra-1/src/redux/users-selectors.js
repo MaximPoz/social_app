@@ -1,4 +1,4 @@
-export const getUsers = (state) => {
+export const getUsers = (state) => {   //селектор отрабатывает как ссылка в state, берёт от туда то что нужно
     return state.usersPage.users
 }
 

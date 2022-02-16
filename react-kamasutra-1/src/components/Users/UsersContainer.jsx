@@ -53,12 +53,12 @@ class UsersContainer extends React.Component { //расширяем что бы 
 
 let mapStateToProps = (state) => { //это ф-ция которая принимает весть state целиком
     return {                       // и возвращает объект только с теми данными которые реально нужны 
-        users: getUsers(state),   //список пользователей
-        pageSize: getPageSize(state),  //размер страницы
-        totalUsersCount: getTotalUsersCount(state),  //общее количество пользователей
-        currentPage: getCurrentPage(state),       //текущая страница
-        isFetching: getIsFetching(state),
-        followingInProgress:getFollowingInProgress(state), // прогресс запроса
+        users: getUsers(state),   //список пользователей (из селектора)
+        pageSize: getPageSize(state),  //размер страницы(из селектора)
+        totalUsersCount: getTotalUsersCount(state),  //общее количество пользователей(из селектора)
+        currentPage: getCurrentPage(state),       //текущая страница(из селектора)
+        isFetching: getIsFetching(state),        //состояние запроса (из селектора)
+        followingInProgress:getFollowingInProgress(state), // прогресс запроса(из селектора)
     }
 }
 
