@@ -5,6 +5,7 @@ import Users from './Users';
 import Preloader from "../common/Preloader/Preloader";
 import { compose } from "redux";
 import { whisAuthRedirect } from "../../HOC/whisAuthRedirect";
+import { getCurrentPage, getFollowingInProgress, getIsFetching, getPageSize, getTotalUsersCount, getUsers } from "../../redux/users-selectors";
 
 
 
@@ -39,14 +40,25 @@ class UsersContainer extends React.Component { //расширяем что бы 
 }
 
 
+// let mapStateToProps = (state) => { //это ф-ция которая принимает весть state целиком
+//     return {                       // и возвращает объект только с теми данными которые реально нужны 
+//         users: state.usersPage.users,   //список пользователей
+//         pageSize: state.usersPage.pageSize,  //размер страницы
+//         totalUsersCount: state.usersPage.totalUsersCount,  //общее количество пользователей
+//         currentPage: state.usersPage.currentPage,       //текущая страница
+//         isFetching: state.usersPage.isFetching,
+//         followingInProgress:state.usersPage.followingInProgress, // прогресс запроса
+//     }
+// }
+
 let mapStateToProps = (state) => { //это ф-ция которая принимает весть state целиком
     return {                       // и возвращает объект только с теми данными которые реально нужны 
-        users: state.usersPage.users,   //список пользователей
-        pageSize: state.usersPage.pageSize,  //размер страницы
-        totalUsersCount: state.usersPage.totalUsersCount,  //общее количество пользователей
-        currentPage: state.usersPage.currentPage,       //текущая страница
-        isFetching: state.usersPage.isFetching,
-        followingInProgress:state.usersPage.followingInProgress, // прогресс запроса
+        users: getUsers(state),   //список пользователей
+        pageSize: getPageSize(state),  //размер страницы
+        totalUsersCount: getTotalUsersCount(state),  //общее количество пользователей
+        currentPage: getCurrentPage(state),       //текущая страница
+        isFetching: getIsFetching(state),
+        followingInProgress:getFollowingInProgress(state), // прогресс запроса
     }
 }
 
