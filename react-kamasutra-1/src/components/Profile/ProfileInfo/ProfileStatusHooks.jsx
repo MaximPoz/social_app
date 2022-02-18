@@ -1,9 +1,13 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 
 const ProfileStatusHooks = (props) => {
 
     let [editMode, setEditMode] = useState(false) //присвоить 0 значением editMode, а первым ф-цию setEditMode которой мы можем менят значение editMode (начальное значение стейта true)   
     let [status, setStatus] = useState(props.status) //из пропсов берём  статус и отдаём его в значения
+
+    useEffect(() => {                // "- Закиньте в меня ф-цию которую я выполню когда произайдёт уже отрисовка"
+        setStatus(props.status) //статус засинх теми данными что пришли из пропсов
+    }, [props.status] ) //если зависимость от props.status изменилась, то синхронизируйся
 
     const activateEditMode = () => {
         setEditMode(true)  // меняем значение стейта на true 
@@ -14,7 +18,7 @@ const ProfileStatusHooks = (props) => {
         props.updateStatus(status)   // обнови статус
     }
 
-    const onStatusChange = (e) => {   //значения из статуса попадают в локальный стейт
+    const onStatusChange = (e) => {   //значения из input (статуса) попадают в локальный стейт после каждого нажатия клавиши
         setStatus(e.currentTarget.value);
     }
 
