@@ -32,7 +32,7 @@ export const setAuthUserData = (userId, email, login, isAuth) => (
 
 
 export const getAuthUserData = () => (dispatch) => {
-    authAPI.me().then(response => {      //когда сервак даст ответ затем (then) выполни стрелочную ф-цию
+    return authAPI.me().then(response => {      //когда сервак даст ответ затем (then) выполни стрелочную ф-цию
         if (response.data.resultCode === 0) {  //если resultCode = 0 тогда
             let { id, email, login } = response.data.data; // мы берём из data'ы  id, email, login и выставляем флаг isAuth true
             dispatch(setAuthUserData(id, email, login, true)); //и отправляем полученные данные в state через setAuthUserData

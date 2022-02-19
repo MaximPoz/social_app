@@ -1,37 +1,39 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import AddPostForm from './AddPostForm/AddPostForm';
 import s from './MyPosts.module.css';
 import Post from './Post/Post';
 
-const MyPosts = (props) => {
+window.props = [];
 
-    let postsElements =
-        props.posts.map(p =>
-            <Post message={p.message} like={p.likesCount} />)  //в качестве "p" у нас придёт строка массива posts (p можно заменить на что угодно)
+const MyPosts = React.memo(props => {  //на входе принимает одну компоненту а на выходе другая memo, если компонента не изменилась, то она снова не отрисовывается
+  
+    //в PureComponent (промежуток между Component и нашей компонентой) уже вшита shouldComponentUpdate но что бы не использовать классовую компоненту мы используем React.memo
+    // shouldComponentUpdate(nextProps, nextState){ //компонента, нужно ли тебе обновится? (следующий пропс и стейт)
+    //     return nextProps != this.props || nextState != this.props;  //если след пропсы не ровны текущим то отрисуй, если нет, то не надо
+    // }
+
+      console.log("RENDER")
+
+    let postsElements = props.posts.map(p => <Post message={p.message} like={p.likesCount} />); //в качестве "p" у нас придёт строка массива posts (p можно заменить на что угодно)
     //и из строки массива как с props мы забераем один из элементов p.message или p.likesCount
     // т.е. .map это цикл который повторяет элемент за элементом из указанного массива.
-    //let postsElements = (props.posts.map (p)) => {
-    //<Post message={p.message} like={p.likesCount} />  это props Post'ов (момент отрисовки Post)
-    //})
 
+    let newPostElement = React.createRef();
 
-    let addNewPost = (value) => {
-        props.addPost(value.newPost);
-    }
+    let addNewPost = value => {
+      props.addPost(value.newPost);
+    };
 
-    return (
-        <div className={s.postsBlock}>
+    return (<div className={s.postsBlock}>
             <h3> My posts </h3>
 
-            <AddPostForm onSubmit={addNewPost}/>
+            <AddPostForm onSubmit={addNewPost} />
 
             <div className={s.posts}>
                 {postsElements}
             </div>
-        </div>
-    )
-
-}
+        </div>);
+  })
 
 
 
