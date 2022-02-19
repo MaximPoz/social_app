@@ -1,4 +1,4 @@
-import React from "react"
+import React from "react"   //react мы подключаем что бы то что мы пишем (jsx) babel транспелировал (переделал) в код понятный virtualDOM
 
 class ProfileStatus extends React.Component {
 
