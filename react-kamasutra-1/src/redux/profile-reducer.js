@@ -3,12 +3,14 @@ import { profileAPI, userAPI } from "../api/api";
 const ADD_POST = 'ADD-POST';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 const SET_STATUS = 'SET_STATUS';
+const DELETE_POST = 'DELETE_POST';
 
 let initialState = {
     posts: [
         { id: 1, message: 'ya Oleg', likesCount: '+16' },
         { id: 2, message: 'ya tozhe', likesCount: '+21' },
-        { id: 3, message: 'a ya zhenya', likesCount: '-12' }
+        { id: 3, message: 'a ya zhenya', likesCount: '-12' },
+        {id: 4, message: 'Dada', likesCount: 11}
     ],
     profile: null,
     status: ''
@@ -18,12 +20,16 @@ const profileReducer = (state = initialState, action) => {
 
     switch (action.type) {  //если объект action имеет тип ADD_POST тогда выполняем этот код (добовляем пост из textarea)
         case ADD_POST: {
-            let text = action.newPost;
+            let newPost = {
+                id: 5,
+                message: action.newPostText,
+                likesCount: 0
+            };
             return {
                 ...state,
-                posts: [{ id: 4, message: text, likesCount: 0 }, ...state.posts],  // пушит в посты         //создаём копию state (копируется только state без внутренних массивов) что бы не изменять основной state
-                newPostText: ''         //зануляем textarea 
-            }
+                posts: [...state.posts, newPost],
+                newPostText: ''
+            };
         }
 
 
@@ -39,6 +45,12 @@ const profileReducer = (state = initialState, action) => {
                 status: action.status,
             }
         }
+        case DELETE_POST: {
+            return {
+                ...state,
+                posts: state.posts.filter(p=> p.id != action.postId)
+            }
+        }
         default:                                     //если не соответствует не одному action тогда вернуть state
             return state;
     }
@@ -47,6 +59,7 @@ const profileReducer = (state = initialState, action) => {
 export const addPostActionCreator = (newPost) => ({ type: ADD_POST, newPost })   //что бы не писать в UI тип данных мы обьявили его тут и передали в MyPosts
 export const setUserProfile = (profile) => ({ type: SET_USER_PROFILE, profile })
 export const setStatus = (status) => ({ type: SET_STATUS, status })
+export const deletePost = (postId) => ({ type: DELETE_POST, postId })
 
 export const getUserProfile = (userId) => {
     return (dispatch) => {
