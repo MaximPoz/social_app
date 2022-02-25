@@ -3,7 +3,7 @@ import loader from './../../../assets/image/loader.svg'
 
 
 let Preloader = (props) => {
-    return <img src={loader} />
+     return <img src={loader} />
 }
 
 export default Preloader;

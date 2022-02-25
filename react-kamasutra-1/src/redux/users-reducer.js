@@ -1,4 +1,5 @@
 import { userAPI } from "../api/api";
+import { updateObjectArray } from "../utils/validators/object-helpers";
 
 const FOLLOW = 'FOLLOW'; // ну тут вроде понятно, объявление в глобальную константу
 const UNFOLLOW = 'UNFOLLOW';
@@ -22,25 +23,15 @@ const usersReducer = (state = initialState, action) => {  //редьюсер п�
     switch (action.type) {  //если объект action имеет тип FOLLOW тогда выполняем этот код (добовляем пост из textarea)
 
         case FOLLOW: //если нужно кого то за'followed 
-            return {        //мы возвращаем копию всего state'a
+            return {     
                 ...state,
-                users: state.users.map(u => {    //делаем копию users'ов  (.map возвращает новый массив на основе старого массива (аналогично - users: [...state.users]))
-                    if (u.id === action.userId) { //если id совподает то мы возвращаем копию этого 
-                        return { ...u, followed: true }  // и конкретного юзера которого надо поменять на true тоже делаем копию
-                    }
-                    return u; //если id не совподает то возвращаем старый объект
-                })
+                users: updateObjectArray(state.users, action.userId, "id", {followed: true }) //рефакторинг 
             }
 
         case UNFOLLOW:
-            return {        //мы возвращаем копию всего state'a
+            return {     
                 ...state,
-                users: state.users.map(u => {    //делаем копию users'ов  (.map возвращает новый массив на основе старого массива (аналогично - users: [...state.users]))
-                    if (u.id === action.userId) { //если id совподает то мы возвращаем копию
-                        return { ...u, followed: false }  // и конкретного юзера которого надо поменять на false тоже делаем копию
-                    }
-                    return u; //если id не совподает то возвращаем старый объект
-                })
+                users: updateObjectArray(state.users, action.userId, "id", {followed: false })
             }
 
         case SET_USERS: {
@@ -60,10 +51,12 @@ const usersReducer = (state = initialState, action) => {  //редьюсер п�
         }
 
         case TOGGLE_IS_FOLLOWING_PROGRESS: {
-            return { ...state,
-                 followingInProgress: action.isFetching
-                 ? [...state.followingInProgress, action.userId] // добавить в state и дизейблить ту что пришла в userId
-                 : state.followingInProgress.filter(id => id !=action.userId) } //пропускаем только ту id которая не ровна той id которая в акшине пришла (фильтрация уже возвращает нам копию массива  )
+            return {
+                ...state,
+                followingInProgress: action.isFetching
+                    ? [...state.followingInProgress, action.userId] // добавить в state и дизейблить ту что пришла в userId
+                    : state.followingInProgress.filter(id => id != action.userId)
+            } //пропускаем только ту id которая не ровна той id которая в акшине пришла (фильтрация уже возвращает нам копию массива  )
         }
 
         default:                                     //если не соответствует не одному action тогда вернуть state
@@ -78,47 +71,47 @@ export const unfollowSuccess = (userId) => ({ type: UNFOLLOW, userId })
 export const setUsers = (users) => ({ type: SET_USERS, users })
 export const setCurrentPage = (currentPage) => ({ type: SET_CURRENT_PAGE, currentPage })
 export const setTotalUsersCount = (totalUsersCount) => ({ type: SET_TOTAL_USERS_COUNT, count: totalUsersCount })
-export const toggleIsFetching = (isFetching) => ({type: TOGGLE_IS_FETCHING, isFetching})
-export const toggleFollowingProgress = (isFetching, userId) => ({type: TOGGLE_IS_FOLLOWING_PROGRESS, isFetching, userId})
+export const toggleIsFetching = (isFetching) => ({ type: TOGGLE_IS_FETCHING, isFetching })
+export const toggleFollowingProgress = (isFetching, userId) => ({ type: TOGGLE_IS_FOLLOWING_PROGRESS, isFetching, userId })
 
 
 
 //САНКИ(thunk) - это ф-ции которые внутри делают какую то комбинацию диспатчей связанную с асинхронной операцией (ajax запрос)
 export const getUser = (currentPage, pageSize) => {
-    return (dispatch) => {
-
-    dispatch(toggleIsFetching(true)) //когла идёт запрос на сервер, включить  анимацию загрузки
-
-    userAPI.getUsers( currentPage, pageSize).then(data => {  //когда сервак даст ответ затем (then) выполни стрелочную ф-цию (getUsers инкапсулировал get запрос на сервер)
-
+    return async (dispatch) => {
+        dispatch(toggleIsFetching(true)) //когла идёт запрос на сервер, включить  анимацию загрузки
+        let data = await userAPI.getUsers(currentPage, pageSize)
         dispatch(toggleIsFetching(false))   //когда запрос приходит, выключаем  анимацию загрузки
         dispatch(setUsers(data.items))  //придёт response у него мы берём из data'ы items и totalCount,
         dispatch(setTotalUsersCount(data.totalCount))
-        });                                         //и пробрасываем через props в setUsers контейнера
-}}
+    };                                         //и пробрасываем через props в setUsers контейнера
+}
+
+
+
+
+
+
+// Cоздаём универсальную ф-цию для подписки и отписки 
+
+const followUnfollowFlow = async (dispatch, userId, apiMethod, actionCreator) => {  //сюда приходят параметры метода
+    dispatch(toggleFollowingProgress(true, userId));  //дожидаемся пока промис за'resolved (будет решен)
+    let response = await apiMethod(userId)
+    if (response.data.resultCode == 0) {                // если resultCode пришел 0, значит ошибок нет
+        dispatch(actionCreator(userId))                 //  и выполняется отписка/подписка от/к определённого пользователя
+    }
+    dispatch(toggleFollowingProgress(false, userId));    //когда запрос закончится передать toggleFollowingProgress folse и id user'a и кнопка разблокируется
+}
 
 export const follow = (userId) => {
-    return (dispatch) => {
-        dispatch(toggleFollowingProgress(true, userId));//когда запрос начнётся передать toggleFollowingProgress true и id user'a и заблокировать кнопку
-        userAPI.follow(userId)  // post запрос на сервер за конкретного id user
-            .then(response => {                          //когда сервак даст ответ затем (then) выполни стрелочную ф-цию
-                if (response.data.resultCode == 0) {// если resultCode пришел 0, значит ошибок нет
-                    dispatch(followSuccess(userId)) //  и выполняется отписка от определённого пользователя
-                }
-                dispatch(toggleFollowingProgress(false, userId));//когда запрос закончится передать toggleFollowingProgress folse и id user'a и кнопка разблокируется
-            });
-}}
+    return async (dispatch) => {
+        followUnfollowFlow(dispatch, userId, userAPI.follow.bind(userAPI), followSuccess)  //вызываем общий метод с (параметрами)
+    }
+}
 
 export const unfollow = (userId) => {
-    return (dispatch) => {
-        dispatch(toggleFollowingProgress(true, userId));//когда запрос начнётся передать toggleFollowingProgress true и id user'a  и заблокировать кнопку
-        userAPI.unfollow(userId) // delete запрос на сервер за конкретного id user
-        .then(response => {  //когда сервак даст ответ затем (then) выполни стрелочную ф-цию
-            if (response.data.resultCode == 0) { // если resultCode пришел 0, значит ошибок нет
-                dispatch(unfollowSuccess(userId))   //  и выполняется отписка от определённого пользователя
-            }
-            dispatch(toggleFollowingProgress(false, userId));//когда запрос закончится передать toggleFollowingProgress folse и id user'a и кнопка разблокируется
-        });
+    return async (dispatch) => {
+        followUnfollowFlow(dispatch, userId, userAPI.unfollow.bind(userAPI), unfollowSuccess)
     }
 }
 

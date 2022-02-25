@@ -1,41 +1,23 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { Field, reduxForm } from "redux-form";
+import { reduxForm } from "redux-form";
 import { login } from '../../redux/auth-reducer';
 import { required } from '../../utils/validators/validators';
-import { Input } from '../common/FormsControls/FormsControls';
+import {  createField, Input } from '../common/FormsControls/FormsControls';
 import style from "./../common/FormsControls/FormsControls.module.css"
 
-const LoginForm = (props) => {
+const LoginForm = ({ handleSubmit, error }) => { //нам из пропсов интересен handleSubmit и error
     return (
         <form  //в пропсах к нам из контейнерной компоненты reduxForm приходит handleSubmit (там идёт сбор всех данных)
-            onSubmit={props.handleSubmit}>
-            <div>
-                <Field
-                    placeholder={"Email"}  //Компонент соединяет каждый input с store 
-                    name={"email"}  // добавили name что бы в fields (полях) консоли в браузере было имя
-                    component={Input}  // указал что компонента для ввода данных 
-                    validate={[required]}
-                />
+            onSubmit={handleSubmit}>
+            {createField("Email", "email", [required], Input)}
+            {createField("Password", "password", [required], Input, {type: "password"})}
+            {createField(null, "rememberMe", [], Input, {type: "checkbox"}, "remember me")}
+
+            {error && <div className={style.formSummaryError}> {error}
             </div>
-            <div>
-                <Field
-                    placeholder={"Password"}
-                    name={"password"} //под каким именем будет уходить на сервак (json)
-                    type={'password'}
-                    component={Input}
-                    validate={[required]} />
-            </div>
-            <div>
-                <Field
-                    component={Input}
-                    name={"rememberMe"}
-                    type={"checkbox"} /> remember me 
-                    </div>
-                    {props.error && <div className={style.formSummaryError}> {props.error} 
-                    </div>
-                    }
+            }
             <div>
                 <button>Login</button>
             </div>

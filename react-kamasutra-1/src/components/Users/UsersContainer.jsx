@@ -4,7 +4,6 @@ import { follow, unfollow, setCurrentPage, toggleFollowingProgress, getUser } fr
 import Users from './Users';
 import Preloader from "../common/Preloader/Preloader";
 import { compose } from "redux";
-import { whisAuthRedirect } from "../../HOC/whisAuthRedirect";
 import { getCurrentPage, getFollowingInProgress, getIsFetching, getPageSize, getTotalUsersCount, getUsers } from "../../redux/users-selectors";
 
 
@@ -12,14 +11,16 @@ import { getCurrentPage, getFollowingInProgress, getIsFetching, getPageSize, get
 class UsersContainer extends React.Component { //расширяем что бы реакт мог взаимодействовать с User
 
     componentDidMount() {  // Происходит монтирование компоненты с сервера (запрос на сервак)
-        this.props.getUser(this.props.currentPage, this.props.pageSize);// заменили весь запрос с диспатчами (api)
+        const{currentPage, pageSize} = this.props;
+        this.props.getUser(currentPage, pageSize);// заменили весь запрос с диспатчами (api)
 
     }
 
 
     onPageChanged = (pageNumber) => {
+        const{pageSize} = this.props;
         this.props.setCurrentPage(pageNumber); 
-        this.props.getUser(pageNumber, this.props.pageSize); // заменили весь запрос с диспатчами (api)
+        this.props.getUser(pageNumber, pageSize); // заменили весь запрос с диспатчами (api)
     }
 
     render() {  //метод render возвращает JSX (начинает работать  первым)
@@ -39,17 +40,6 @@ class UsersContainer extends React.Component { //расширяем что бы 
     }
 }
 
-
-// let mapStateToProps = (state) => { //это ф-ция которая принимает весть state целиком
-//     return {                       // и возвращает объект только с теми данными которые реально нужны 
-//         users: state.usersPage.users,   //список пользователей
-//         pageSize: state.usersPage.pageSize,  //размер страницы
-//         totalUsersCount: state.usersPage.totalUsersCount,  //общее количество пользователей
-//         currentPage: state.usersPage.currentPage,       //текущая страница
-//         isFetching: state.usersPage.isFetching,
-//         followingInProgress:state.usersPage.followingInProgress, // прогресс запроса
-//     }
-// }
 
 let mapStateToProps = (state) => { //это ф-ция которая принимает весть state целиком
     return {                       // и возвращает объект только с теми данными которые реально нужны 

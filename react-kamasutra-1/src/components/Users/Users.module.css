@@ -4,15 +4,6 @@
     border-radius: 30px;
 }
 
-.selectPage{
-    font-weight: bold;
-    color: brown;
-}
-
-.allPages{
-    cursor: pointer;
-}
-
 .avaUsers {
     width: 100px;
     height: 100px;

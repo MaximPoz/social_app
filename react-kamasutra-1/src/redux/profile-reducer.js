@@ -10,7 +10,7 @@ let initialState = {
         { id: 1, message: 'ya Oleg', likesCount: '+16' },
         { id: 2, message: 'ya tozhe', likesCount: '+21' },
         { id: 3, message: 'a ya zhenya', likesCount: '-12' },
-        {id: 4, message: 'Dada', likesCount: 11}
+        { id: 4, message: 'Dada', likesCount: 11 }
     ],
     profile: null,
     status: ''
@@ -48,7 +48,7 @@ const profileReducer = (state = initialState, action) => {
         case DELETE_POST: {
             return {
                 ...state,
-                posts: state.posts.filter(p=> p.id != action.postId)
+                posts: state.posts.filter(p => p.id != action.postId)
             }
         }
         default:                                     //если не соответствует не одному action тогда вернуть state
@@ -56,32 +56,30 @@ const profileReducer = (state = initialState, action) => {
     }
 }
 
+
 export const addPostActionCreator = (newPost) => ({ type: ADD_POST, newPost })   //что бы не писать в UI тип данных мы обьявили его тут и передали в MyPosts
 export const setUserProfile = (profile) => ({ type: SET_USER_PROFILE, profile })
 export const setStatus = (status) => ({ type: SET_STATUS, status })
 export const deletePost = (postId) => ({ type: DELETE_POST, postId })
 
-export const getUserProfile = (userId) => {
-    return (dispatch) => {
-        userAPI.getProfile(userId).then(response => {     //когда сервак даст ответ затем (then) выполни стрелочную ф-цию
-            dispatch(setUserProfile(response.data)) //придёт response у него мы берём из data'ы,
-        });                                          //и пробрасываем через props в setUserProfile контейнера
-    }
-}
 
-export const getStatus = (userId) => (dispatch) => {  //эквивалентно return (dispatch) => 
-    profileAPI.getStatus(userId).then(response => {     //когда сервак даст ответ затем (then) выполни стрелочную ф-цию
-        dispatch(setStatus(response.data)) //придёт response у него мы берём из data'ы,
-    });                                          //и пробрасываем через props в setUserProfile контейнера
-}
 
-export const updateStatus = (status) => (dispatch) => {
-    profileAPI.updateStatus(status).then(response => {     //когда сервак даст ответ затем (then) выполни стрелочную ф-цию
-        if (response.data.resultCode === 0) {                // и если всё впорядке тогда 
-            dispatch(setStatus(status)) //мы берём из data'ы status
-        }
-    }); 
-}
+export const getUserProfile = (userId) => async (dispatch) => {
+    let response = await userAPI.getProfile(userId)          //в response сидит результат которым зарезолвится промис
+    dispatch(setUserProfile(response.data))                //придёт response у него мы берём из data'ы,
+};                                                        //и пробрасываем через props в setUserProfile контейнера
+
+export const getStatus = (userId) => async (dispatch) => {  
+    let response = await profileAPI.getStatus(userId)     
+    dispatch(setStatus(response.data))                    //придёт response у него мы берём из data'ы,
+};                                                       //и пробрасываем через props в setUserProfile контейнера
+
+export const updateStatus = (status) => async (dispatch) => {
+    let response = await profileAPI.updateStatus(status)     
+    if (response.data.resultCode === 0) {                // и если всё впорядке тогда 
+        dispatch(setStatus(status))                      //мы берём из data'ы status
+    } 
+};
 
 
 
