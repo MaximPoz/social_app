@@ -1,8 +1,9 @@
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import SamuraiJsAPP from './App';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+it('render with chashing', () => {   //Тест на то что наше приложение загружается, хз за чем
+  const div = document.createElement('div');
+  ReactDOM.render(<SamuraiJsAPP />, div);
+  ReactDOM.unmountComponentAtNode(div);
 });

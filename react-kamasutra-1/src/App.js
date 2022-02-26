@@ -15,19 +15,22 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { initializeApp } from './redux/app-reducer';
 import Preloader from './components/common/Preloader/Preloader';
+import store from './redux/redux-store';
+import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
 
 
 
 class App extends Component {
 
   componentDidMount() {  // Происходит монтирование компоненты с сервера (запрос на сервак)
-    this.props.initializeApp () // получаем из auth-reduser проверку что мы залогиненны
+    this.props.initializeApp() // получаем из auth-reduser проверку что мы залогиненны
   }
 
   render() {
-      if(!this.props.initialized) {
-        return <Preloader />
-      }
+    if (!this.props.initialized) {
+      return <Preloader />
+    }
     return (
       <div className='app-wrapper'>
         <HeaderContainer />
@@ -57,6 +60,19 @@ const mapStateToProps = (state) => ({
   initialized: state.app.initialized
 })
 
-export default compose(
-            withRouter,   // для роутов (иначе не сможем переходить по роутам)
-            connect(mapStateToProps, { initializeApp })) (App); // когда мы конектим компоненту с роутоми, роутинг сбивается
+let AppContainer = compose(
+  withRouter,   // для роутов (иначе не сможем переходить по роутам)
+  connect(mapStateToProps, { initializeApp }))(App); // когда мы конектим компоненту с роутоми, роутинг сбивается
+
+const SamuraiJsAPP = (props) => {
+  return <React.StrictMode>
+    <BrowserRouter>
+      <Provider store={store}>
+        <AppContainer />
+      </Provider>
+    </BrowserRouter>
+  </React.StrictMode>
+
+}
+
+export default SamuraiJsAPP;
