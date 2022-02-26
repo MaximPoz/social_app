@@ -1,8 +1,23 @@
-.selectPage{
+/* .selectPage{
     font-weight: bold;
     color: brown;
 }
 
 .allPages{
     cursor: pointer;
+} */
+
+
+.paginator {
+    margin: 10px;
 }
+.pageNumber {
+    padding: 2px;
+    border: 1px solid grey;
+    cursor: pointer;
+}
+
+.pageNumber.selectedPage {
+    font-weight: bold;
+    border-color: black;
+} 
