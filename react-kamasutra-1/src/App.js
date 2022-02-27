@@ -5,11 +5,9 @@ import News from './components/News/News'
 import { Route, withRouter } from 'react-router-dom';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
-import DialogsContainer from './components/Dialogs/DialogsContainer';
 import UsersContainer from './components/Users/UsersContainer';
-import ProfileContainer from './components/Profile/ProfileContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
-import LoginPage from './components/Login/Login';
+
 import { Component } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -18,7 +16,11 @@ import Preloader from './components/common/Preloader/Preloader';
 import store from './redux/redux-store';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import { withSuspense } from './HOC/withSuspense';
 
+const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer')); //типа компанента загружена 
+const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer')); //типа компанента загружена 
+const LoginPage = React.lazy(() => import('./components/Login/Login')); //типа компанента загружена 
 
 
 class App extends Component {
@@ -37,9 +39,13 @@ class App extends Component {
         <Nav />
         <div className='app-wrapper-content'>
           <Route path='/Dialogs'   //Route следит за URL и загружается если path'ы совпадают
-            render={() => <DialogsContainer />} />
+            render={withSuspense
+              (DialogsContainer) //та компонента что будет загружаться лениво
+            } />
           <Route path='/profile/:userId?'  // creating params (/:userId) for profile at user ID
-            render={() => <ProfileContainer />} />
+            render={withSuspense
+              (ProfileContainer)//та компонента что будет загружаться лениво
+            } />
           <Route path='/News'
             render={() => <News />} />
           <Route path='/Music'
@@ -49,7 +55,9 @@ class App extends Component {
           <Route path='/Users'
             render={() => <UsersContainer />} />
           <Route path='/login'
-            render={() => <LoginPage />} />
+            render={withSuspense
+              (LoginPage)//та компонента что будет загружаться лениво
+            } />
         </div>
       </div>
     );
