@@ -14,9 +14,9 @@ import { compose } from 'redux';
 import { initializeApp } from './redux/app-reducer';
 import Preloader from './components/common/Preloader/Preloader';
 import store from './redux/redux-store';
-import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { withSuspense } from './HOC/withSuspense';
+import { HashRouter } from 'react-router-dom';
 
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer')); //типа компанента загружена 
 const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer')); //типа компанента загружена 
@@ -74,11 +74,11 @@ let AppContainer = compose(
 
 const SamuraiJsAPP = (props) => {
   return <React.StrictMode>
-    <BrowserRouter>
+    <HashRouter>
       <Provider store={store}>
         <AppContainer />
       </Provider>
-    </BrowserRouter>
+      </HashRouter>
   </React.StrictMode>
 
 }
