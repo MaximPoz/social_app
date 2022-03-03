@@ -4,6 +4,7 @@ const ADD_POST = 'ADD-POST';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 const SET_STATUS = 'SET_STATUS';
 const DELETE_POST = 'DELETE_POST';
+const SAVE_PHOTO_SUCCESS = 'SAVE_PHOTO_SUCCESS';
 
 let initialState = {
     posts: [
@@ -51,6 +52,13 @@ const profileReducer = (state = initialState, action) => {
                 posts: state.posts.filter(p => p.id != action.postId)
             }
         }
+        case SAVE_PHOTO_SUCCESS: {
+            return {
+                ...state,
+                profile: { ...state.profile, photos: action.photos }
+            } // создаём копию профайла, а фото меняем на то что пришло в action
+        }
+
         default:                                     //если не соответствует не одному action тогда вернуть state
             return state;
     }
@@ -61,25 +69,33 @@ export const addPostActionCreator = (newPost) => ({ type: ADD_POST, newPost })  
 export const setUserProfile = (profile) => ({ type: SET_USER_PROFILE, profile })
 export const setStatus = (status) => ({ type: SET_STATUS, status })
 export const deletePost = (postId) => ({ type: DELETE_POST, postId })
+export const savePhotoSuccess = (photos) => ({type: SAVE_PHOTO_SUCCESS, photos})
 
 
 
 export const getUserProfile = (userId) => async (dispatch) => {
     let response = await userAPI.getProfile(userId)          //в response сидит результат которым зарезолвится промис
     dispatch(setUserProfile(response.data))                //придёт response у него мы берём из data'ы,
-};                                                        //и пробрасываем через props в setUserProfile контейнера
+}                                                        //и пробрасываем через props в setUserProfile контейнера
 
-export const getStatus = (userId) => async (dispatch) => {  
-    let response = await profileAPI.getStatus(userId)     
+export const getStatus = (userId) => async (dispatch) => {
+    let response = await profileAPI.getStatus(userId)
     dispatch(setStatus(response.data))                    //придёт response у него мы берём из data'ы,
-};                                                       //и пробрасываем через props в setUserProfile контейнера
+}                                                   //и пробрасываем через props в setUserProfile контейнера
 
 export const updateStatus = (status) => async (dispatch) => {
-    let response = await profileAPI.updateStatus(status)     
+    let response = await profileAPI.updateStatus(status)
     if (response.data.resultCode === 0) {                // и если всё впорядке тогда 
         dispatch(setStatus(status))                      //мы берём из data'ы status
-    } 
-};
+    }
+}
+export const savePhoto = (file) => async (dispatch) => { //берём фото 
+    let response = await profileAPI.savePhoto(file); //и отправляем фото на сервер
+    if (response.data.resultCode === 0) {           // и если всё впорядке тогда 
+        dispatch(savePhotoSuccess(response.data.data.photos));
+    }
+}
+
 
 
 
