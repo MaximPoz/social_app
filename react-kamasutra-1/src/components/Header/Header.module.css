@@ -1,8 +1,9 @@
 .header{
     grid-area: h;
     background-color:wheat ;
-    width: 1535px;
+    width: 100%;
     height: 54px;
+    position: fixed;
   }
 
   .header img{

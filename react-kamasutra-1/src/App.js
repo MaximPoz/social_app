@@ -16,7 +16,9 @@ import Preloader from './components/common/Preloader/Preloader';
 import store from './redux/redux-store';
 import { Provider } from 'react-redux';
 import { withSuspense } from './HOC/withSuspense';
-import { HashRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer')); //типа компанента загружена 
 const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer')); //типа компанента загружена 
@@ -37,27 +39,39 @@ class App extends Component {
       <div className='app-wrapper'>
         <HeaderContainer />
         <Nav />
+
         <div className='app-wrapper-content'>
-          <Route path='/Dialogs'   //Route следит за URL и загружается если path'ы совпадают
-            render={withSuspense
-              (DialogsContainer) //та компонента что будет загружаться лениво
-            } />
-          <Route path='/profile/:userId?'  // creating params (/:userId) for profile at user ID
-            render={withSuspense
-              (ProfileContainer)//та компонента что будет загружаться лениво
-            } />
-          <Route path='/News'
-            render={() => <News />} />
-          <Route path='/Music'
-            render={() => <Music />} />
-          <Route path='/Settings'
-            render={() => <Settings />} />
-          <Route path='/Users'
-            render={() => <UsersContainer />} />
-          <Route path='/login'
-            render={withSuspense
-              (LoginPage)//та компонента что будет загружаться лениво
-            } />
+
+          <Switch>
+
+            <Redirect exact from="/" to="/profile" // если в URL нет значения, то перенаправляет в профайл
+            />
+
+            <Route path='/Dialogs'   //Route следит за URL и загружается если path'ы совпадают
+              render={withSuspense(DialogsContainer) //та компонента что будет загружаться лениво
+              } />
+
+            <Route path='/profile/:userId?'  // creating params (/:userId) for profile at user ID
+              render={withSuspense(ProfileContainer)//та компонента что будет загружаться лениво
+              } />
+
+            <Route path='/News'
+              render={() => <News />} />
+
+            <Route path='/Music'
+              render={() => <Music />} />
+
+            <Route path='/Settings'
+              render={() => <Settings />} />
+
+            <Route path='/Users'
+              render={() => <UsersContainer />} />
+
+            <Route path='/login'
+              render={withSuspense(LoginPage)//та компонента что будет загружаться лениво
+              } />
+
+          </Switch>
         </div>
       </div>
     );
@@ -74,11 +88,11 @@ let AppContainer = compose(
 
 const SamuraiJsAPP = (props) => {
   return <React.StrictMode>
-    <HashRouter>
+    <BrowserRouter>
       <Provider store={store}>
         <AppContainer />
       </Provider>
-      </HashRouter>
+    </BrowserRouter>
   </React.StrictMode>
 
 }

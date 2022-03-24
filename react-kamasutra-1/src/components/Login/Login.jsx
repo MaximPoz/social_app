@@ -7,13 +7,16 @@ import { required } from '../../utils/validators/validators';
 import {  createField, Input } from '../common/FormsControls/FormsControls';
 import style from "./../common/FormsControls/FormsControls.module.css"
 
-const LoginForm = ({ handleSubmit, error }) => { //нам из пропсов интересен handleSubmit и error
+const LoginForm = ({ handleSubmit, error, captchaUrl }) => { //нам из пропсов интересен handleSubmit и error
     return (
         <form  //в пропсах к нам из контейнерной компоненты reduxForm приходит handleSubmit (там идёт сбор всех данных)
             onSubmit={handleSubmit}>
             {createField("Email", "email", [required], Input)}
             {createField("Password", "password", [required], Input, {type: "password"})}
             {createField(null, "rememberMe", [], Input, {type: "checkbox"}, "remember me")}
+
+            { captchaUrl && <img src={captchaUrl} />}
+            { captchaUrl &&  createField("Symbols from image", "captcha", [required], Input, {}) }
 
             {error && <div className={style.formSummaryError}> {error}
             </div>
@@ -30,7 +33,7 @@ const LoginReduxForm = reduxForm({ form: 'login' }) //уникальное им�
 
 const Login = (props) => {
     const onSubmit = (formData) => { // в formData приходят все значения из формы
-        props.login(formData.email, formData.password, formData.rememberMe);  //вызываем login из пропсов и даём ему значения из formData
+        props.login(formData.email, formData.password, formData.rememberMe, formData.captcha);  //вызываем login из пропсов и даём ему значения из formData
     }
 
     if (props.isAuth) { // если мы зарегестрировались, тогда перенаравляемся в профайл
@@ -40,12 +43,14 @@ const Login = (props) => {
     return <div>
         <h1>LOGIN</h1>
         <LoginReduxForm  //из Login в LoginReduxForm мы передаём колбэк ф-цию onSubmit в которую у нас приходят все значения из формы (formData) 
-            onSubmit={onSubmit} />
+            onSubmit={onSubmit} 
+            captchaUrl={props.captchaUrl}
+            />
     </div>
 }
 
 
-const mapStateToProps = (state) => ({ isAuth: state.auth.isAuth })
+const mapStateToProps = (state) => ({  captchaUrl: state.auth.captchaUrl, isAuth: state.auth.isAuth })
 
 export default connect(mapStateToProps, { login }) //login в этой точке является санКриейтором
     (Login); 

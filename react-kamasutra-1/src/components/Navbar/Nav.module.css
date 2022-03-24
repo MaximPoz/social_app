@@ -1,8 +1,11 @@
 .nav{ 
     grid-area: n;
     background-color: rgb(160, 160, 68);
-    width: 210px;
+    width: 160px;
+    height: 50%;
     padding: 20px; 
+    position: fixed;
+    top: 60px;
   }
 
   .item a{
